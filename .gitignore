@@ -1,0 +1,5 @@
+*.elc
+*-autoloads.el
+*-pkg.el
+spacious-padding.info
+spacious-padding.texi
