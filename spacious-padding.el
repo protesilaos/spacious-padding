@@ -27,7 +27,11 @@
 
 ;;; Commentary:
 ;;
-;; WORK-IN-PROGRESS.  Increase the padding/spacing of frames and windows.
+;; This package provides a global minor mode to increase the
+;; spacing/padding of Emacs windows and frames.  The idea is to make
+;; editing and reading feel more comfortable.  Enable the
+;; `spacious-padding-mode'.  Adjust the exact spacing values by
+;; modifying the user option `spacious-padding-widths'.
 ;;
 ;; While obvious to everyone, here are the backronyms for this
 ;; package: Space Perception Adjusted Consistently Impacts Overall
