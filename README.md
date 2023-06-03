@@ -10,8 +10,7 @@ Inspiration for this package comes from [Nicolas Rougier's impressive
 designs](https://github.com/rougier) and [Daniel Mendler's
 `org-modern` package](https://github.com/minad/org-modern).
 
-+ Package name (GNU ELPA): `spacious-padding` (⚠️ work-in-progress)
-+ Official manual: <https://protesilaos.com/emacs/spacious-padding>
++ Package name (GNU ELPA): `spacious-padding`
 + Git repo on SourceHut: <https://git.sr.ht/~protesilaos/spacious-padding>
   - Mirrors:
     + GitHub: <https://github.com/protesilaos/spacious-padding>
