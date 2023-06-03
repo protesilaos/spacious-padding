@@ -33,6 +33,13 @@
 ;; `spacious-padding-mode'.  Adjust the exact spacing values by
 ;; modifying the user option `spacious-padding-widths'.
 ;;
+;; Inspiration for this package comes from Nicolas Rougier's
+;; impressive designs[1] and Daniel Mendler's `org-modern`
+;; package[2]
+;;
+;; 1. <https://github.com/rougier>
+;; 2. <https://github.com/minad/org-modern>
+;;
 ;; While obvious to everyone, here are the backronyms for this
 ;; package: Space Perception Adjusted Consistently Impacts Overall
 ;; Usability State ... padding; Spacious ... Precise Adjustments to

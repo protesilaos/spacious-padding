@@ -6,6 +6,10 @@ editing and reading feel more comfortable.  Enable the mode with `M-x
 spacious-padding-mode`.  Adjust the exact spacing values by modifying
 the user option `spacious-padding-widths`.
 
+Inspiration for this package comes from [Nicolas Rougier's impressive
+designs](https://github.com/rougier) and [Daniel Mendler's
+`org-modern` package](https://github.com/minad/org-modern).
+
 + Package name (GNU ELPA): `spacious-padding` (⚠️ work-in-progress)
 + Official manual: <https://protesilaos.com/emacs/spacious-padding>
 + Git repo on SourceHut: <https://git.sr.ht/~protesilaos/spacious-padding>
