@@ -1,5 +1,7 @@
 # spacious-padding for GNU Emacs
 
+DEMO IMAGES: <https://protesilaos.com/codelog/2023-06-03-emacs-spacious-padding/>.
+
 This package provides a global minor mode to increase the
 spacing/padding of Emacs windows and frames.  The idea is to make
 editing and reading feel more comfortable.  Enable the mode with `M-x
