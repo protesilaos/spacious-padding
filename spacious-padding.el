@@ -67,7 +67,7 @@
   "Make window dividers for THEME invisible."
   (let ((bg (face-background 'default)))
     (custom-set-faces
-     `(fringe ((t :background ,bg :foreground ,bg)))
+     `(fringe ((t :background ,bg)))
      `(window-divider ((t :background ,bg :foreground ,bg)))
      `(window-divider-first-pixel ((t :background ,bg :foreground ,bg)))
      `(window-divider-last-pixel ((t :background ,bg :foreground ,bg))))))
