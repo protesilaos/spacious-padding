@@ -53,14 +53,21 @@
 
 (defcustom spacious-padding-widths
   '( :internal-border-width 15
+     :header-line-width 4
+     :mode-line-width 6
+     :tab-width 4
      :right-divider-width 30
      :scroll-bar-width 8)
   "Number of pixels for frame and window divider border width."
   :type '(plist
           :key-type (choice (const :internal-border-width)
                             (const :right-divider-width)
+                            (const :tab-width)
+                            (const :header-line-width)
+                            (const :mode-line-width)
                             (const :scroll-bar-width))
           :value-type natnum)
+  :package-version '(spacious-padding . "0.2.0")
   :group 'spacious-padding)
 
 (defun spacious-padding-set-invisible-dividers (_theme)
@@ -68,6 +75,25 @@
   (let ((bg (face-background 'default)))
     (custom-set-faces
      `(fringe ((t :background ,bg)))
+     `(header-line ((t :box ( :line-width ,(plist-get spacious-padding-widths :header-line-width)
+                            :color ,(face-background 'header-line nil 'default)
+                            :style nil))))
+     `(mode-line ((t :box ( :line-width ,(plist-get spacious-padding-widths :mode-line-width)
+                            :color ,(face-background 'mode-line)
+                            :style nil))))
+     ;; We cannot use :inherit mode-line because it does not get our version of it...
+     `(mode-line-active ((t :box ( :line-width ,(plist-get spacious-padding-widths :mode-line-width)
+                            :color ,(face-background 'mode-line-active nil 'mode-line)
+                            :style nil))))
+     `(mode-line-inactive ((t :box ( :line-width ,(plist-get spacious-padding-widths :mode-line-width)
+                                     :color ,(face-background 'mode-line-inactive)
+                                     :style nil))))
+     `(tab-bar-tab ((t :box ( :line-width ,(plist-get spacious-padding-widths :tab-width)
+                              :color ,(face-background 'tab-bar-tab nil 'tab-bar)
+                              :style nil))))
+     `(tab-bar-tab-inactive ((t :box ( :line-width ,(plist-get spacious-padding-widths :tab-width)
+                                       :color ,(face-background 'tab-bar-tab-inactive nil 'tab-bar)
+                                       :style nil))))
      `(window-divider ((t :background ,bg :foreground ,bg)))
      `(window-divider-first-pixel ((t :background ,bg :foreground ,bg)))
      `(window-divider-last-pixel ((t :background ,bg :foreground ,bg))))))
@@ -76,6 +102,12 @@
   "Make window dividers for THEME invisible."
   (custom-set-faces
    '(fringe (( )))
+   '(header-line (( )))
+   '(mode-line (( )))
+   '(mode-line-active (( )))
+   '(mode-line-inactive (( )))
+   '(tab-bar-tab (( )))
+   '(tab-bar-tab-inactive (( )))
    '(window-divider (( )))
    '(window-divider-first-pixel (( )))
    '(window-divider-last-pixel (( )))))
