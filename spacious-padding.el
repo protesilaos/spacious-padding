@@ -59,7 +59,24 @@
      :tab-width 4
      :right-divider-width 30
      :scroll-bar-width 8)
-  "Number of pixels for frame and window divider border width."
+  "Set the pixel width of individual User Interface elements.
+This is a plist of the form (:key1 value1 :key2 value2).  The
+value is always a natural number.  Keys are keywords among the
+following:
+
+- `:internal-border-width' refers to the space between the
+  boundaries of the Emacs frame and where the text contents
+  start.
+
+- `:right-divider-width' is the space between two side-by-side
+  windows.
+
+- `:tab-width' concerns the padding around tab buttons.  For the
+  time being, `tab-bar-mode' is the only one affected.
+
+- `:header-line-width', `mode-line-width', `scroll-bar-width'
+  point to the header-line, mode-line, and scroll-bar,
+  respectively."
   :type '(plist
           :key-type (choice (const :internal-border-width)
                             (const :right-divider-width)
