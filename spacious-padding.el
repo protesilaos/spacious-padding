@@ -88,33 +88,53 @@ following:
   :package-version '(spacious-padding . "0.2.0")
   :group 'spacious-padding)
 
+(defvar spacious-padding--mode-line-faces
+  '(mode-line mode-line-active mode-line-inactive mode-line-highlight)
+  "Mode line faces relevant to `spacious-padding-mode'.")
+
+(defvar spacious-padding--header-line-faces
+  '(header-line header-line-highlight)
+  "Header line faces relevant to `spacious-padding-mode'.")
+
+;; TODO 2023-11-16: Cover `tab-line-mode'.
+(defvar spacious-padding--tab-faces
+  '(tab-bar tab-bar-tab tab-bar-tab-inactive)
+  "Tab faces relevant to `spacious-padding-mode'.")
+
+(defun spacious-padding--get-face-width (face)
+  "Return width of FACE from `spacious-padding-widths'."
+  (cond
+   ((memq face spacious-padding--mode-line-faces)
+    (plist-get spacious-padding-widths :mode-line-width))
+   ((memq face spacious-padding--header-line-faces)
+    (plist-get spacious-padding-widths :header-line-width))
+   ((memq face spacious-padding--tab-faces)
+    (plist-get spacious-padding-widths :tab-width))
+   (t (error "`%s' is not relevant to `spacious-padding-mode'" face))))
+
+(defun spacious-padding-set-face-box-padding (face fallback)
+  "Return appropriate face attributes for FACE with FALLBACK face background."
+  (list :box
+        (list
+         :line-width (spacious-padding--get-face-width face)
+         :color (face-background face nil fallback)
+         :style nil)))
+
 (defun spacious-padding-set-invisible-dividers (_theme)
   "Make window dividers for THEME invisible."
   (let ((bg-main (face-background 'default))
         (fg-main (face-foreground 'default)))
     (custom-set-faces
      `(fringe ((t :background ,bg-main)))
-     `(header-line ((t :box ( :line-width ,(plist-get spacious-padding-widths :header-line-width)
-                            :color ,(face-background 'header-line nil 'default)
-                            :style nil))))
+     `(header-line ((t ,@(spacious-padding-set-face-box-padding 'header-line 'default))))
      `(header-line-highlight ((t :box (:color ,fg-main))))
-     `(mode-line ((t :box ( :line-width ,(plist-get spacious-padding-widths :mode-line-width)
-                            :color ,(face-background 'mode-line)
-                            :style nil))))
+     `(mode-line ((t ,@(spacious-padding-set-face-box-padding 'mode-line 'default))))
      ;; We cannot use :inherit mode-line because it does not get our version of it...
-     `(mode-line-active ((t :box ( :line-width ,(plist-get spacious-padding-widths :mode-line-width)
-                            :color ,(face-background 'mode-line-active nil 'mode-line)
-                            :style nil))))
-     `(mode-line-inactive ((t :box ( :line-width ,(plist-get spacious-padding-widths :mode-line-width)
-                                     :color ,(face-background 'mode-line-inactive)
-                                     :style nil))))
+     `(mode-line-active ((t ,@(spacious-padding-set-face-box-padding 'mode-line-active 'mode-line))))
+     `(mode-line-inactive ((t ,@(spacious-padding-set-face-box-padding 'mode-line-inactive 'mode-line))))
      `(mode-line-highlight ((t :box (:color ,fg-main))))
-     `(tab-bar-tab ((t :box ( :line-width ,(plist-get spacious-padding-widths :tab-width)
-                              :color ,(face-background 'tab-bar-tab nil 'tab-bar)
-                              :style nil))))
-     `(tab-bar-tab-inactive ((t :box ( :line-width ,(plist-get spacious-padding-widths :tab-width)
-                                       :color ,(face-background 'tab-bar-tab-inactive nil 'tab-bar)
-                                       :style nil))))
+     `(tab-bar-tab ((t ,@(spacious-padding-set-face-box-padding 'tab-bar-tab 'tab-bar))))
+     `(tab-bar-tab-inactive ((t ,@(spacious-padding-set-face-box-padding 'tab-bar-tab-inactive 'tab-bar))))
      `(window-divider ((t :background ,bg-main :foreground ,bg-main)))
      `(window-divider-first-pixel ((t :background ,bg-main :foreground ,bg-main)))
      `(window-divider-last-pixel ((t :background ,bg-main :foreground ,bg-main))))))
