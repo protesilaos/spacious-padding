@@ -101,15 +101,20 @@ following:
   '(tab-bar tab-bar-tab tab-bar-tab-inactive)
   "Tab faces relevant to `spacious-padding-mode'.")
 
+(defun spacious-padding--get-box-width (key)
+  "Get width for :box of face represented by KEY in `spacious-padding-widths'.
+Return 4 if KEY does not have a value."
+  (or (plist-get spacious-padding-widths key) 4))
+
 (defun spacious-padding--get-face-width (face)
   "Return width of FACE from `spacious-padding-widths'."
   (cond
    ((memq face spacious-padding--mode-line-faces)
-    (plist-get spacious-padding-widths :mode-line-width))
+    (spacious-padding--get-box-width :mode-line-width))
    ((memq face spacious-padding--header-line-faces)
-    (plist-get spacious-padding-widths :header-line-width))
+    (spacious-padding--get-box-width :header-line-width))
    ((memq face spacious-padding--tab-faces)
-    (plist-get spacious-padding-widths :tab-width))
+    (spacious-padding--get-box-width :tab-width))
    (t (error "`%s' is not relevant to `spacious-padding-mode'" face))))
 
 (defun spacious-padding-set-face-box-padding (face fallback)
