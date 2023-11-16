@@ -126,6 +126,7 @@ following:
         (fg-main (face-foreground 'default)))
     (custom-set-faces
      `(fringe ((t :background ,bg-main)))
+     `(line-number ((t :background ,bg-main)))
      `(header-line ((t ,@(spacious-padding-set-face-box-padding 'header-line 'default))))
      `(header-line-highlight ((t :box (:color ,fg-main))))
      `(mode-line ((t ,@(spacious-padding-set-face-box-padding 'mode-line 'default))))
@@ -143,6 +144,7 @@ following:
   "Make window dividers for THEME invisible."
   (custom-set-faces
    '(fringe (( )))
+   '(line-number (( )))
    '(header-line (( )))
    '(header-line-highlight (( )))
    '(mode-line (( )))
