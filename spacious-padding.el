@@ -189,14 +189,6 @@ parameter values."
      (right-divider-width . ,(spacious-padding--get-right-divider-width reset))
      (scroll-bar-width  . ,(spacious-padding--get-scroll-bar-width reset)))))
 
-;;;###autoload
-(define-minor-mode spacious-padding-mode
-  "Increase the padding/spacing of frames and windows."
-  :global t
-  (if spacious-padding-mode
-      (spacious-padding--enable-mode)
-    (spacious-padding--disable-mode)))
-
 (defun spacious-padding--enable-mode ()
   "Enable `spacious-padding-mode'."
   (spacious-padding--store-default-parameters)
@@ -209,6 +201,14 @@ parameter values."
   (spacious-padding-modify-frame-parameters :reset)
   (spacious-padding-unset-invisible-dividers)
   (remove-hook 'enable-theme-functions #'spacious-padding-set-invisible-dividers))
+
+;;;###autoload
+(define-minor-mode spacious-padding-mode
+  "Increase the padding/spacing of frames and windows."
+  :global t
+  (if spacious-padding-mode
+      (spacious-padding--enable-mode)
+    (spacious-padding--disable-mode)))
 
 (provide 'spacious-padding)
 ;;; spacious-padding.el ends here
