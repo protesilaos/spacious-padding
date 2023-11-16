@@ -183,29 +183,22 @@ Return 4 if KEY does not have a value."
     (setq spacious-padding--scroll-bar-width
           (frame-parameter nil 'scroll-bar-width))))
 
-(defun spacious-padding--get-internal-border-width (&optional reset)
-  "Return value of frame parameter `internal-border-width'.
+(defmacro spacious-padding--define-get-frame-param (parameter fallback)
+  "Define function to return frame PARAMETER or reset it with FALLBACK value."
+  `(defun ,(intern (format "spacious-padding--get-%s" parameter)) (&optional reset)
+     ,(format "Return value of frame parameter `%s'.
 With optional RESET argument as non-nil, restore the default
 parameter value."
-  (if reset
-      (or spacious-padding--internal-border-width 0)
-    (plist-get spacious-padding-widths :internal-border-width)))
+             parameter)
+     (or
+      (if reset
+          ,(intern (format "spacious-padding--%s" parameter))
+        (plist-get spacious-padding-widths ,(intern (concat ":" parameter))))
+      ,fallback)))
 
-(defun spacious-padding--get-right-divider-width (&optional reset)
-  "Return value of frame parameter `right-divider-width'.
-With optional RESET argument as non-nil, restore the default
-parameter value."
-  (if reset
-      (or spacious-padding--right-divider-width 1)
-    (plist-get spacious-padding-widths :right-divider-width)))
-
-(defun spacious-padding--get-scroll-bar-width (&optional reset)
-  "Return value of frame parameter `scroll-bar-width'.
-With optional RESET argument as non-nil, restore the default
-parameter value."
-  (if reset
-      (or spacious-padding--scroll-bar-width 16)
-    (plist-get spacious-padding-widths :scroll-bar-width)))
+(spacious-padding--define-get-frame-param "internal-border-width" 0)
+(spacious-padding--define-get-frame-param "right-divider-width" 1)
+(spacious-padding--define-get-frame-param "scroll-bar-width" 16)
 
 (defun spacious-padding-modify-frame-parameters (reset)
   "Modify all frame parameters to specify spacing.
