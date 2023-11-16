@@ -49,6 +49,7 @@
 
 (defgroup spacious-padding ()
   "Increase the padding/spacing of frames and windows."
+  :group 'faces
   :group 'frames)
 
 (defcustom spacious-padding-widths
