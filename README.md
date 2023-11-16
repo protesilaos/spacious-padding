@@ -1,6 +1,9 @@
 # spacious-padding for GNU Emacs
 
-DEMO IMAGES: <https://protesilaos.com/codelog/2023-06-03-emacs-spacious-padding/>.
+DEMO IMAGES:
+
+- <https://protesilaos.com/codelog/2023-06-03-emacs-spacious-padding/>
+- <https://protesilaos.com/codelog/2023-11-15-spacious-padding-extra-ui-dev/>
 
 This package provides a global minor mode to increase the
 spacing/padding of Emacs windows and frames.  The idea is to make
