@@ -115,7 +115,7 @@ Return 4 if KEY does not have a value."
     (spacious-padding--get-box-width :header-line-width))
    ((memq face spacious-padding--tab-faces)
     (spacious-padding--get-box-width :tab-width))
-   (t (error "`%s' is not relevant to `spacious-padding-mode'" face)))))
+   (t (error "`%s' is not relevant to `spacious-padding-mode'" face))))
 
 (defun spacious-padding-set-face-box-padding (face fallback)
   "Return appropriate face attributes for FACE with FALLBACK face background."
@@ -124,7 +124,7 @@ Return 4 if KEY does not have a value."
           (list
            :line-width (spacious-padding--get-face-width face)
            :color (face-background face nil fallback)
-           :style nil)))
+           :style nil))))
 
 (defun spacious-padding-set-invisible-dividers (_theme)
   "Make window dividers for THEME invisible."
