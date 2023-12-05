@@ -95,8 +95,14 @@ Preserve whatever padding is specified in `spacious-padding-widths'."
   :package-version '(spacious-padding . "0.3.0")
   :group 'spacious-padding)
 
+;; NOTE 2023-12-05: The `keycast-key' should preferably be
+;; disambiguated into separate faces for all the places where keycast
+;; can be displayed (mode line, header line, tab bar).  For now I am
+;; treating it as a mode line face which means that the mode line
+;; padding will be applied elsewhere if keycast is shown there.  Not a
+;; huge problem, but I am aware of it.
 (defvar spacious-padding--mode-line-faces
-  '(mode-line mode-line-active mode-line-inactive mode-line-highlight)
+  '(mode-line mode-line-active mode-line-inactive mode-line-highlight keycast-key)
   "Mode line faces relevant to `spacious-padding-mode'.")
 
 (defvar spacious-padding--header-line-faces
@@ -151,6 +157,7 @@ must be applied."
      `(line-number ((t :background ,bg-main)))
      `(header-line ((t ,@(spacious-padding-set-face-box-padding 'header-line 'default))))
      `(header-line-highlight ((t :box (:color ,fg-main))))
+     `(keycast-key ((t ,@(spacious-padding-set-face-box-padding 'keycast-key 'default))))
      `(mode-line ((t ,@(spacious-padding-set-face-box-padding 'mode-line 'default :maybe-subtle))))
      ;; We cannot use :inherit mode-line because it does not get our version of it...
      `(mode-line-active ((t ,@(spacious-padding-set-face-box-padding 'mode-line-active 'mode-line :maybe-subtle))))
@@ -168,6 +175,7 @@ must be applied."
    '(fringe (( )))
    '(line-number (( )))
    '(header-line (( )))
+   '(keycast-key (( )))
    '(header-line-highlight (( )))
    '(mode-line (( )))
    '(mode-line-active (( )))
