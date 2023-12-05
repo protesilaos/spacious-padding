@@ -88,6 +88,13 @@ following:
   :package-version '(spacious-padding . "0.2.0")
   :group 'spacious-padding)
 
+(defcustom spacious-padding-subtle-mode-line nil
+  "When non-nil, remove the background from the mode lines and add overlines.
+Preserve whatever padding is specified in `spacious-padding-widths'."
+  :type 'boolean
+  :package-version '(spacious-padding . "0.3.0")
+  :group 'spacious-padding)
+
 (defvar spacious-padding--mode-line-faces
   '(mode-line mode-line-active mode-line-inactive mode-line-highlight)
   "Mode line faces relevant to `spacious-padding-mode'.")
@@ -117,14 +124,23 @@ Return 4 if KEY does not have a value."
     (spacious-padding--get-box-width :tab-width))
    (t (error "`%s' is not relevant to `spacious-padding-mode'" face))))
 
-(defun spacious-padding-set-face-box-padding (face fallback)
-  "Return appropriate face attributes for FACE with FALLBACK face background."
+(defun spacious-padding-set-face-box-padding (face fallback &optional maybe-subtle)
+  "Return appropriate face attributes for FACE with FALLBACK face background.
+With optional MAYBE-SUBTLE, test whether a maybe-subtle style
+must be applied."
   (when (facep face)
-    (list :box
-          (list
-           :line-width (spacious-padding--get-face-width face)
-           :color (face-background face nil fallback)
-           :style nil))))
+    (let* ((original-bg (face-background face nil fallback))
+           (subtle-bg (face-background 'default))
+           (subtlep (and maybe-subtle spacious-padding-subtle-mode-line))
+           (bg (if subtlep subtle-bg original-bg)))
+      `(,@(when subtlep
+            (list
+             :background bg
+             :overline (face-foreground face nil fallback)))
+        :box
+        ( :line-width ,(spacious-padding--get-face-width face)
+          :color ,bg
+          :style nil)))))
 
 (defun spacious-padding-set-invisible-dividers (_theme)
   "Make window dividers for THEME invisible."
@@ -135,10 +151,10 @@ Return 4 if KEY does not have a value."
      `(line-number ((t :background ,bg-main)))
      `(header-line ((t ,@(spacious-padding-set-face-box-padding 'header-line 'default))))
      `(header-line-highlight ((t :box (:color ,fg-main))))
-     `(mode-line ((t ,@(spacious-padding-set-face-box-padding 'mode-line 'default))))
+     `(mode-line ((t ,@(spacious-padding-set-face-box-padding 'mode-line 'default :maybe-subtle))))
      ;; We cannot use :inherit mode-line because it does not get our version of it...
-     `(mode-line-active ((t ,@(spacious-padding-set-face-box-padding 'mode-line-active 'mode-line))))
-     `(mode-line-inactive ((t ,@(spacious-padding-set-face-box-padding 'mode-line-inactive 'mode-line))))
+     `(mode-line-active ((t ,@(spacious-padding-set-face-box-padding 'mode-line-active 'mode-line :maybe-subtle))))
+     `(mode-line-inactive ((t ,@(spacious-padding-set-face-box-padding 'mode-line-inactive 'mode-line :maybe-subtle))))
      `(mode-line-highlight ((t :box (:color ,fg-main))))
      `(tab-bar-tab ((t ,@(spacious-padding-set-face-box-padding 'tab-bar-tab 'tab-bar))))
      `(tab-bar-tab-inactive ((t ,@(spacious-padding-set-face-box-padding 'tab-bar-tab-inactive 'tab-bar))))
