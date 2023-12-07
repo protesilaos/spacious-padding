@@ -89,9 +89,62 @@ following:
   :group 'spacious-padding)
 
 (defcustom spacious-padding-subtle-mode-line nil
-  "When non-nil, remove the background from the mode lines and add overlines.
-Preserve whatever padding is specified in `spacious-padding-widths'."
-  :type 'boolean
+  "Remove the background from the mode lines and add overlines.
+
+Preserve whatever padding is specified in `spacious-padding-widths'.
+
+The value is either a boolean type or a plist.  If it is non-nil,
+use the foreground of the underlying face to derive the color of
+the overline.
+
+If the non-nil value is a plist read the following keys to
+determine the exact style of the overlines.
+
+- `:mode-line-active' refers to the active/current mode line.
+
+- `:mode-line-inactive' refers to the inactive/non-current mode
+  lines.
+
+Each key accepts either a face or a string representing a color
+as its associated value:
+
+- The face is an unquoted symbol, such as `success' or `shadow'.
+
+- The color is a name among those listed in the output of the
+  command `list-colors-display' or a hexadecimal RGB value, such
+  as #123456.
+
+If the key is missing or its value is not one of the above, fall
+back to reading the foreground of the underlying face to
+determine the color of the overline.
+
+Examples of valid configurations:
+
+    ;; Use the foreground of the underlying face to determine the color of
+    ;; the overline (e.g. the inactive mode line has gray text, so render
+    ;; the overline in the same gray).
+    (setq spacious-padding-subtle-mode-line t)
+
+    ;; Use the foreground of the `error' face (typically a red hue) for
+    ;; the active mode line's overline.  For the inactive mode line, fall
+    ;; back to the foreground color of the underlying face (as in the case
+    ;; of the t shown above).
+    (setq spacious-padding-subtle-mode-line
+          \\='(:mode-line-active error))
+
+    ;; As above, but now use the foreground of the `shadow' face for the
+    ;; inactive mode line.
+    (setq spacious-padding-subtle-mode-line
+          \\='(:mode-line-active error :mode-line-inactive shadow))
+
+    ;; Use color values directly.
+    (setq spacious-padding-subtle-mode-line
+          \\='(:mode-line-active \"#0000ff\" :mode-line-inactive \"gray50\"))"
+  :type '(choice boolean
+                 (plist
+                  :key-type (choice (const :mode-line-active)
+                                    (const :mode-line-inactive))
+                  :value-type (choice string face)))
   :package-version '(spacious-padding . "0.3.0")
   :group 'spacious-padding)
 
@@ -130,19 +183,31 @@ Return 4 if KEY does not have a value."
     (spacious-padding--get-box-width :tab-width))
    (t (error "`%s' is not relevant to `spacious-padding-mode'" face))))
 
-(defun spacious-padding-set-face-box-padding (face fallback &optional maybe-subtle)
-  "Return appropriate face attributes for FACE with FALLBACK face background.
-With optional MAYBE-SUBTLE, test whether a maybe-subtle style
-must be applied."
+(defun spacious-padding--get-face-overline-color (face fallback subtle-key)
+  "Get overline foreground value for FACE with FALLBACK face if needed.
+Use SUBTLE-KEY to determine the value based on
+`spacious-padding-subtle-mode-line', falling back to FACE, then
+FALLBACK."
+  (let ((subtle-value (plist-get spacious-padding-subtle-mode-line subtle-key)))
+    (cond
+     ((stringp subtle-value) subtle-value)
+     ((facep subtle-value) (face-foreground subtle-value nil face))
+     (t (face-foreground face nil fallback)))))
+
+(defun spacious-padding-set-face-box-padding (face fallback &optional subtle-key)
+  "Return face attributes for FACE with FALLBACK face background.
+With optional SUBTLE-KEY, read its value from the
+`spacious-padding-subtle-mode-line' and apply it to FACE as an
+overline."
   (when (facep face)
     (let* ((original-bg (face-background face nil fallback))
            (subtle-bg (face-background 'default))
-           (subtlep (and maybe-subtle spacious-padding-subtle-mode-line))
+           (subtlep (and subtle-key spacious-padding-subtle-mode-line))
            (bg (if subtlep subtle-bg original-bg)))
       `(,@(when subtlep
             (list
              :background bg
-             :overline (face-foreground face nil fallback)))
+             :overline (spacious-padding--get-face-overline-color face fallback subtle-key)))
         :box
         ( :line-width ,(spacious-padding--get-face-width face)
           :color ,bg
@@ -158,10 +223,10 @@ must be applied."
      `(header-line ((t ,@(spacious-padding-set-face-box-padding 'header-line 'default))))
      `(header-line-highlight ((t :box (:color ,fg-main))))
      `(keycast-key ((t ,@(spacious-padding-set-face-box-padding 'keycast-key 'default))))
-     `(mode-line ((t ,@(spacious-padding-set-face-box-padding 'mode-line 'default :maybe-subtle))))
+     `(mode-line ((t ,@(spacious-padding-set-face-box-padding 'mode-line 'default :mode-line-active))))
      ;; We cannot use :inherit mode-line because it does not get our version of it...
-     `(mode-line-active ((t ,@(spacious-padding-set-face-box-padding 'mode-line-active 'mode-line :maybe-subtle))))
-     `(mode-line-inactive ((t ,@(spacious-padding-set-face-box-padding 'mode-line-inactive 'mode-line :maybe-subtle))))
+     `(mode-line-active ((t ,@(spacious-padding-set-face-box-padding 'mode-line-active 'mode-line :mode-line-active))))
+     `(mode-line-inactive ((t ,@(spacious-padding-set-face-box-padding 'mode-line-inactive 'mode-line :mode-line-inactive))))
      `(mode-line-highlight ((t :box (:color ,fg-main))))
      `(tab-bar-tab ((t ,@(spacious-padding-set-face-box-padding 'tab-bar-tab 'tab-bar))))
      `(tab-bar-tab-inactive ((t ,@(spacious-padding-set-face-box-padding 'tab-bar-tab-inactive 'tab-bar))))
