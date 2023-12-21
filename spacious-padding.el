@@ -31,7 +31,9 @@
 ;; spacing/padding of Emacs windows and frames.  The idea is to make
 ;; editing and reading feel more comfortable.  Enable the
 ;; `spacious-padding-mode'.  Adjust the exact spacing values by
-;; modifying the user option `spacious-padding-widths'.
+;; modifying the user option `spacious-padding-widths'.  To have a
+;; more subtle mode line, with nothing but an overline, configure the
+;; user option `spacious-padding-subtle-mode-line'.
 ;;
 ;; Inspiration for this package comes from Nicolas Rougier's
 ;; impressive designs[1] and Daniel Mendler's `org-modern`
