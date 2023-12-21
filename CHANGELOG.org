@@ -13,7 +13,94 @@ the manual: <https://protesilaos.com/emacs/spacious-padding>.
 
 #+toc: headlines 1 insert TOC here, with one headline level
 
+* Version 0.3.0 on 2023-12-21
+:PROPERTIES:
+:CUSTOM_ID: h:466dd7e0-c314-42a9-b1bc-a499acc5d415
+:END:
+
+** Enjoy the optional subtle mode lines
+:PROPERTIES:
+:CUSTOM_ID: h:57b2702a-3891-4cfc-aa37-e08f1f63290e
+:END:
+
+The new user option ~~spacious-padding-subtle-mode-line~ makes mode
+lines more subtle. It does so by removing the background and adding an
+overline in its stead.
+
+By default, ~spacious-padding-mode~ does not refashion the mode lines
+other than adding to them some extra padding (per ~spacious-padding-widths~).
+The user option ~spacious-padding-subtle-mode-line~ does change the
+mode lines so that instead of a background they only have an overline,
+while preserving whatever padding is in effect.
+
+The value bound to ~spacious-padding-subtle-mode-line~ is either a
+boolean type or a plist. If it is non-nil, use the foreground of the
+underlying mode line face to derive the color of the overline.
+
+If the non-nil value is a plist read the following keys to determine
+the exact style of the overlines.
+
+- ~:mode-line-active~ refers to the active/current mode line.
+
+- ~:mode-line-inactive~ refers to the inactive/non-current mode lines.
+
+Each key accepts either a face or a string representing a color as its
+associated value:
+
+- The face is an unquoted symbol, such as ~success~ or ~shadow~, whose
+  =:foreground= attribute is queried to extract the desired color value.
+
+- The color is a name among those listed in the output of the command
+  ~list-colors-display~ or a hexadecimal RGB value, such as =#123456=.
+
+If the key is missing or its value is not one of the above, fall back
+to reading the foreground of the underlying mode line face to
+determine the color of the overline.
+
+Examples of valid configurations:
+
+#+begin_src emacs-lisp
+;; Use the foreground of the underlying mode line face to determine
+;; the color of the overline (e.g. the inactive mode line has gray
+;; text, so render the overline in the same gray).
+(setq spacious-padding-subtle-mode-line t)
+
+;; Use the foreground of the `error' face (typically a red hue) for
+;; the active mode line's overline.  For the inactive mode line, fall
+;; back to the foreground color of the underlying face (as in the case
+;; of the t shown above).
+(setq spacious-padding-subtle-mode-line
+      '(:mode-line-active error))
+
+;; As above, but now use the foreground of the `shadow' face for the
+;; inactive mode line.
+(setq spacious-padding-subtle-mode-line
+      '(:mode-line-active error :mode-line-inactive shadow))
+
+;; Use color values directly.
+(setq spacious-padding-subtle-mode-line
+      '(:mode-line-active "#0000ff" :mode-line-inactive "gray50"))
+#+end_src
+
+** Expanded the documentation
+:PROPERTIES:
+:CUSTOM_ID: h:f205e230-f980-44ac-9ceb-6807f4380480
+:END:
+
+The ~spacious-padding~ package now comes with an Info manual. When
+looking at the source code, this is done in the =README.org= file,
+which the GNU ELPA machinery automatically converts to Info. A change
+log is also provided.
+
+Their respective web links are these:
+
+- <https://protesilaos.com/emacs/spacious-padding>
+- <https://protesilaos.com/emacs/spacious-padding-changelog>
+
 * Version 0.2.0 on 2023-11-24
+:PROPERTIES:
+:CUSTOM_ID: h:375d5280-9ee8-4a5d-9eca-e5b3967a3bdb
+:END:
 
 [ I provide screenshots in a recent publication:
   <https://protesilaos.com/codelog/2023-11-15-spacious-padding-extra-ui-dev/> ]
