@@ -33,6 +33,7 @@ Current development target is {{{development-version}}}.
 
 + Package name (GNU ELPA): ~spacious-padding~
 + Official manual: <https://protesilaos.com/emacs/spacious-padding>
++ Change log: <https://protesilaos.com/emacs/spacious-padding>
 + Git repo on SourceHut: <https://git.sr.ht/~protesilaos/spacious-padding>
   - Mirrors:
     + GitHub: <https://github.com/protesilaos/spacious-padding>
