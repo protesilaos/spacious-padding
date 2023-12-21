@@ -1,0 +1,49 @@
+#+title: Change log of Spacious-Padding
+#+author: Protesilaos Stavrou
+#+email: info@protesilaos.com
+#+language: en
+#+options: ':t toc:nil author:t email:t num:t
+#+startup: content
+
+This document contains the release notes for each tagged commit on the
+project's main git repository: <https://git.sr.ht/~protesilaos/spacious-padding>.
+
+The newest release is at the top.  For further details, please consult
+the manual: <https://protesilaos.com/emacs/spacious-padding>.
+
+#+toc: headlines 1 insert TOC here, with one headline level
+
+* Version 0.2.0 on 2023-11-24
+
+[ I provide screenshots in a recent publication:
+  <https://protesilaos.com/codelog/2023-11-15-spacious-padding-extra-ui-dev/> ]
+
+The package is stable and works well. This set of changes expands the
+concept of "spacious padding" to more user interface elements, namely:
+
+- active and inactive mode lines;
+- header line;
+- the ~tab-bar-mode~.
+
+The user option which sets all the width values is
+~spacious-padding-widths~. It now reads keywords that correspond to
+the aforementioned elements. Concretely, here are the defaults:
+
+#+begin_src emacs-lisp
+(setq spacious-padding-widths
+      '( :internal-border-width 15
+         :header-line-width 4
+         :mode-line-width 6
+         :tab-width 4
+         :right-divider-width 30
+         :scroll-bar-width 8))
+#+end_src
+
+After changing the widths, reload the ~spacious-padding-mode~ for
+changes to take effect.
+
+I have taken care to make 'spacious-padding-mode' work even when the
+~spacious-padding-widths~ does not include all keywords. This means
+that the previously supported value will continue to work (the
+previous value did not have the keywords ~header-line-width~,
+~mode-line-width~, and ~tab-width~).
