@@ -16,11 +16,16 @@ designs](https://github.com/rougier) and [Daniel Mendler's
 `org-modern` package](https://github.com/minad/org-modern).
 
 + Package name (GNU ELPA): `spacious-padding`
++ Official manual: <https://protesilaos.com/emacs/spacious-padding>
++ Change log: <https://protesilaos.com/emacs/spacious-padding>
 + Git repo on SourceHut: <https://git.sr.ht/~protesilaos/spacious-padding>
   - Mirrors:
     + GitHub: <https://github.com/protesilaos/spacious-padding>
     + GitLab: <https://gitlab.com/protesilaos/spacious-padding>
 + Mailing list: <https://lists.sr.ht/~protesilaos/general-issues>
++ Sample images:
+  - <https://protesilaos.com/codelog/2023-06-03-emacs-spacious-padding/>
+  - <https://protesilaos.com/codelog/2023-11-15-spacious-padding-extra-ui-dev/>
 + Backronyms: Space Perception Adjusted Consistently Impacts Overall
   Usability State ... padding; Spacious ... Precise Adjustments to
   Desktop Divider Internals Neatly Generated.
