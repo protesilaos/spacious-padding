@@ -236,6 +236,7 @@ overline."
      `(window-divider ((t :background ,bg-main :foreground ,bg-main)))
      `(window-divider-first-pixel ((t :background ,bg-main :foreground ,bg-main)))
      `(window-divider-last-pixel ((t :background ,bg-main :foreground ,bg-main))))))
+     `(vertical-border ((t :background ,bg-main :foreground ,bg-main)))
 
 (defun spacious-padding-unset-invisible-dividers ()
   "Make window dividers for THEME invisible."
@@ -251,6 +252,7 @@ overline."
    '(mode-line-highlight (( )))
    '(tab-bar-tab (( )))
    '(tab-bar-tab-inactive (( )))
+   `(vertical-border (( )))
    '(window-divider (( )))
    '(window-divider-first-pixel (( )))
    '(window-divider-last-pixel (( )))))
