@@ -216,6 +216,13 @@ overline."
           :color ,bg
           :style nil)))))
 
+(defun spacious-padding-set-window-divider (face color)
+  "Set window divider FACE to COLOR its width is greater than 1."
+  (list
+   face
+   `((t ,(when (> (plist-get spacious-padding-widths :right-divider-width) 1)
+           (list :background color :foreground color))))))
+
 (defun spacious-padding-set-invisible-dividers (_theme)
   "Make window dividers for THEME invisible."
   (let ((bg-main (face-background 'default))
@@ -233,10 +240,10 @@ overline."
      `(mode-line-highlight ((t :box (:color ,fg-main))))
      `(tab-bar-tab ((t ,@(spacious-padding-set-face-box-padding 'tab-bar-tab 'tab-bar))))
      `(tab-bar-tab-inactive ((t ,@(spacious-padding-set-face-box-padding 'tab-bar-tab-inactive 'tab-bar))))
-     `(window-divider ((t :background ,bg-main :foreground ,bg-main)))
-     `(window-divider-first-pixel ((t :background ,bg-main :foreground ,bg-main)))
-     `(window-divider-last-pixel ((t :background ,bg-main :foreground ,bg-main))))))
      `(vertical-border ((t :background ,bg-main :foreground ,bg-main)))
+     `(,@(spacious-padding-set-window-divider 'window-divider bg-main))
+     `(,@(spacious-padding-set-window-divider 'window-divider-first-pixel bg-main))
+     `(,@(spacious-padding-set-window-divider 'window-divider-last-pixel bg-main)))))
 
 (defun spacious-padding-unset-invisible-dividers ()
   "Make window dividers for THEME invisible."
