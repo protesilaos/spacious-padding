@@ -72,7 +72,8 @@ following:
   start.
 
 - `:right-divider-width' is the space between two side-by-side
-  windows.
+  windows.  If the value is less than 1, the border is not hidden
+  when `spacious-padding-mode' is enabled.
 
 - `left-fringe-width' and `right-fringe-wdith' refer to the
   fringes on each side of the window (the area where line

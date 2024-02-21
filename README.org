@@ -96,7 +96,13 @@ is always a natural number. Keys are keywords among the following:
   of the Emacs frame and where the text contents start.
 
 - ~:right-divider-width~ is the space between two side-by-side
-  windows.
+  windows. If the value is less than 1, the border is not hidden when
+  ~spacious-padding-mode~ is enabled. [ The behaviour of preserving
+  the border when the width is <= 1 is part of {{{development-version}}}. ]
+
+- ~left-fringe-width~ and ~right-fringe-wdith~ refer to the fringes on
+  each side of the window (the area where line wrapping and other
+  indicators are displayed). [ Part of {{{development-version}}}. ]
 
 - ~:tab-width~ concerns the padding around tab buttons. For the time
   being, ~tab-bar-mode~ is the only one affected.
