@@ -100,7 +100,7 @@ is always a natural number. Keys are keywords among the following:
   ~spacious-padding-mode~ is enabled. [ The behaviour of preserving
   the border when the width is <= 1 is part of {{{development-version}}}. ]
 
-- ~left-fringe-width~ and ~right-fringe-wdith~ refer to the fringes on
+- ~left-fringe-width~ and ~right-fringe-width~ refer to the fringes on
   each side of the window (the area where line wrapping and other
   indicators are displayed). [ Part of {{{development-version}}}. ]
 
@@ -267,7 +267,8 @@ help matters.
 
 + Contributions to code or the manual :: Neo Dim.
 
-+ Ideas and/or user feedback :: Damien Cassou, Tomasz Hołubowicz.
++ Ideas and/or user feedback :: Damien Cassou, Nicolas Semrau, Tomasz
+  Hołubowicz.
 
 Inspiration for this package comes from Nicolas Rougier's impressive
 designs and Daniel Mendler's ~org-modern~ package:
