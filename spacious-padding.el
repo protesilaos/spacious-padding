@@ -58,6 +58,7 @@
      :header-line-width 4
      :mode-line-width 6
      :tab-width 4
+     :tab-line-width 4
      :right-divider-width 30
      :scroll-bar-width 8
      :left-fringe-width 8
@@ -79,8 +80,9 @@ following:
   fringes on each side of the window (the area where line
   wrapping and other indicators are displayed).
 
-- `:tab-width' concerns the padding around tab buttons.  For the
-  time being, `tab-bar-mode' is the only one affected.
+- `:tab-width' concerns the padding around buttons of the tab-bar.
+
+- `:tab-line-width' concerns the padding around buttons of the tab-line. 
 
 - `:header-line-width', `mode-line-width', `scroll-bar-width'
   point to the header-line, mode-line, and scroll-bar,
@@ -93,6 +95,7 @@ For the technicalities, read Info node `(elisp) Frame Layout'."
                             (const :left-fringe-width)
                             (const :right-fringe-width)
                             (const :tab-width)
+                            (const :tab-line-width)
                             (const :header-line-width)
                             (const :mode-line-width)
                             (const :scroll-bar-width))
@@ -176,9 +179,12 @@ Examples of valid configurations:
   '(header-line header-line-highlight)
   "Header line faces relevant to `spacious-padding-mode'.")
 
-;; TODO 2023-11-16: Cover `tab-line-mode'.
 (defvar spacious-padding--tab-faces
   '(tab-bar tab-bar-tab tab-bar-tab-inactive)
+  "Tab faces relevant to `spacious-padding-mode'.")
+
+(defvar spacious-padding--tab-line-faces
+  '(tab-line tab-line-tab tab-line-tab-inactive)
   "Tab faces relevant to `spacious-padding-mode'.")
 
 (defun spacious-padding--get-box-width (key)
@@ -195,6 +201,8 @@ Return 4 if KEY does not have a value."
     (spacious-padding--get-box-width :header-line-width))
    ((memq face spacious-padding--tab-faces)
     (spacious-padding--get-box-width :tab-width))
+   ((memq face spacious-padding--tab-line-faces)
+    (spacious-padding--get-box-width :tab-line-width))
    (t (error "`%s' is not relevant to `spacious-padding-mode'" face))))
 
 (defun spacious-padding--get-face-overline-color (face fallback subtle-key)
@@ -251,6 +259,9 @@ overline."
      `(mode-line-highlight ((t :box (:color ,fg-main))))
      `(tab-bar-tab ((t ,@(spacious-padding-set-face-box-padding 'tab-bar-tab 'tab-bar))))
      `(tab-bar-tab-inactive ((t ,@(spacious-padding-set-face-box-padding 'tab-bar-tab-inactive 'tab-bar))))
+     `(tab-line-tab ((t ,@(spacious-padding-set-face-box-padding 'tab-line-tab 'tab-line))))
+     `(tab-line-tab-inactive ((t ,@(spacious-padding-set-face-box-padding 'tab-line-tab-inactive 'tab-line))))
+     `(tab-line-tab-active ((t ,@(spacious-padding-set-face-box-padding 'tab-line-tab-active 'tab-line))))
      `(vertical-border ((t :background ,bg-main :foreground ,bg-main)))
      `(,@(spacious-padding-set-window-divider 'window-divider bg-main))
      `(,@(spacious-padding-set-window-divider 'window-divider-first-pixel bg-main))
@@ -270,6 +281,8 @@ overline."
    '(mode-line-highlight (( )))
    '(tab-bar-tab (( )))
    '(tab-bar-tab-inactive (( )))
+   '(tab-line-tab (( )))
+   '(tab-line-tab-inactive (( )))
    `(vertical-border (( )))
    '(window-divider (( )))
    '(window-divider-first-pixel (( )))
