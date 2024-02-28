@@ -267,7 +267,7 @@ help matters.
 
 + Author/maintainer :: Protesilaos Stavrou.
 
-+ Contributions to code or the manual :: Neo Dim.
++ Contributions to code or the manual :: Lucas Gruss, Neo Dim.
 
 + Ideas and/or user feedback :: Damien Cassou, Nicolas Semrau, Tomasz
   Hołubowicz.
