@@ -58,11 +58,9 @@
      :header-line-width 4
      :mode-line-width 6
      :tab-width 4
-     :tab-line-width 4
      :right-divider-width 30
      :scroll-bar-width 8
-     :left-fringe-width 8
-     :right-fringe-width 8)
+     :fringe-width 8)
   "Set the pixel width of individual User Interface elements.
 This is a plist of the form (:key1 value1 :key2 value2).  The
 value is always a natural number.  Keys are keywords among the
@@ -73,16 +71,26 @@ following:
   start.
 
 - `:right-divider-width' is the space between two side-by-side
-  windows.  If the value is less than 1, the border is not hidden
-  when `spacious-padding-mode' is enabled.
+  windows.  If the value is 1, the border is not hidden when
+  `spacious-padding-mode' is enabled.
 
-- `left-fringe-width' and `right-fringe-wdith' refer to the
-  fringes on each side of the window (the area where line
+- `:fringe-width' applies to the fringes on either side of the
+  window.  The more specific keys `:left-fringe-width' and
+  `:right-fringe-wdith' can be used for finer control.  If those
+  are not specified (or set to a nil value), they fall back to
+  `:fringe-width'.  (The fringes are the window sides where line
   wrapping and other indicators are displayed).
 
-- `:tab-width' concerns the padding around buttons of the tab-bar.
+- `:tab-width' concerns the padding around buttons of all tabbed
+  interfaces (`tab-bar-mode', `tab-line-mode').
 
-- `:tab-line-width' concerns the padding around buttons of the tab-line. 
+- `:tab-bar-width' concerns the padding around buttons of the
+  `tab-bar-mode'.  If not specified (or set to nil) it uses the
+  value of `:tab-width'.
+
+- `:tab-line-width' concerns the padding around buttons of the
+  tab-line.  If not specified (or set to nil) it uses the value
+  of `:tab-width'.
 
 - `:header-line-width', `mode-line-width', `scroll-bar-width'
   point to the header-line, mode-line, and scroll-bar,
@@ -92,14 +100,16 @@ For the technicalities, read Info node `(elisp) Frame Layout'."
   :type '(plist
           :key-type (choice (const :internal-border-width)
                             (const :right-divider-width)
+                            (const :fringe-width)
                             (const :left-fringe-width)
                             (const :right-fringe-width)
                             (const :tab-width)
+                            (const :tab-bar-width)
                             (const :tab-line-width)
                             (const :header-line-width)
                             (const :mode-line-width)
                             (const :scroll-bar-width))
-          :value-type natnum)
+          :value-type (choice natnum (const nil)))
   :package-version '(spacious-padding . "0.4.0")
   :group 'spacious-padding)
 
@@ -179,7 +189,7 @@ Examples of valid configurations:
   '(header-line header-line-highlight)
   "Header line faces relevant to `spacious-padding-mode'.")
 
-(defvar spacious-padding--tab-faces
+(defvar spacious-padding--tab-bar-faces
   '(tab-bar tab-bar-tab tab-bar-tab-inactive)
   "Tab faces relevant to `spacious-padding-mode'.")
 
@@ -187,10 +197,14 @@ Examples of valid configurations:
   '(tab-line tab-line-tab tab-line-tab-inactive)
   "Tab faces relevant to `spacious-padding-mode'.")
 
-(defun spacious-padding--get-box-width (key)
+(defun spacious-padding--get-box-width (key &optional no-fallback)
   "Get width for :box of face represented by KEY in `spacious-padding-widths'.
-Return 4 if KEY does not have a value."
-  (or (plist-get spacious-padding-widths key) 4))
+Return 4 if KEY does not have a value.  If optional NO-FALLBACK
+is non-nil, do not return a fallback value: just nil."
+  (cond
+   ((plist-get spacious-padding-widths key))
+   (no-fallback nil)
+   (t 4)))
 
 (defun spacious-padding--get-face-width (face)
   "Return width of FACE from `spacious-padding-widths'."
@@ -199,10 +213,12 @@ Return 4 if KEY does not have a value."
     (spacious-padding--get-box-width :mode-line-width))
    ((memq face spacious-padding--header-line-faces)
     (spacious-padding--get-box-width :header-line-width))
-   ((memq face spacious-padding--tab-faces)
-    (spacious-padding--get-box-width :tab-width))
+   ((memq face spacious-padding--tab-bar-faces)
+    (or (spacious-padding--get-box-width :tab-bar-width :fall-back-to-tab-width)
+        (spacious-padding--get-box-width :tab-width)))
    ((memq face spacious-padding--tab-line-faces)
-    (spacious-padding--get-box-width :tab-line-width))
+    (or (spacious-padding--get-box-width :tab-line-width :fall-back-to-tab-width)
+        (spacious-padding--get-box-width :tab-width)))
    (t (error "`%s' is not relevant to `spacious-padding-mode'" face))))
 
 (defun spacious-padding--get-face-overline-color (face fallback subtle-key)
@@ -294,6 +310,9 @@ overline."
 (defvar spacious-padding--right-divider-width nil
   "Default value of frame parameter `right-divider-width'.")
 
+(defvar spacious-padding--fringe-width nil
+  "Default value of frame parameters `left-fringe' and `right-fringe'.")
+
 (defvar spacious-padding--left-fringe-width nil
   "Default value of frame parameter `left-fringe'.")
 
@@ -311,6 +330,8 @@ overline."
   (unless spacious-padding--right-divider-width
     (setq spacious-padding--right-divider-width
           (frame-parameter nil 'right-divider-width)))
+  (unless spacious-padding--fringe-width
+    (setq spacious-padding--fringe-width 8)) ; 8 is the default per `fringe-mode'
   (unless spacious-padding--left-fringe-width
     (setq spacious-padding--left-fringe-width
           (frame-parameter nil 'left-fringe-width)))
@@ -336,8 +357,9 @@ parameter value."
 
 (spacious-padding--define-get-frame-param "internal-border-width" 0)
 (spacious-padding--define-get-frame-param "right-divider-width" 1)
-(spacious-padding--define-get-frame-param "left-fringe-width" 8)
-(spacious-padding--define-get-frame-param "right-fringe-width" 8)
+(spacious-padding--define-get-frame-param "fringe-width" 8)
+(spacious-padding--define-get-frame-param "left-fringe-width" nil)
+(spacious-padding--define-get-frame-param "right-fringe-width" nil)
 (spacious-padding--define-get-frame-param "scroll-bar-width" 16)
 
 (defun spacious-padding-modify-frame-parameters (reset)
@@ -347,8 +369,10 @@ parameter values."
   (modify-all-frames-parameters
    `((internal-border-width . ,(spacious-padding--get-internal-border-width reset))
      (right-divider-width . ,(spacious-padding--get-right-divider-width reset))
-     (left-fringe . ,(spacious-padding--get-left-fringe-width reset))
-     (right-fringe . ,(spacious-padding--get-right-fringe-width reset))
+     (left-fringe . ,(or (spacious-padding--get-left-fringe-width reset)
+                         (spacious-padding--get-fringe-width reset)))
+     (right-fringe . ,(or (spacious-padding--get-right-fringe-width reset)
+                          (spacious-padding--get-fringe-width reset)))
      (scroll-bar-width  . ,(spacious-padding--get-scroll-bar-width reset)))))
 
 (defun spacious-padding--enable-mode ()
