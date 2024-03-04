@@ -13,6 +13,162 @@ the manual: <https://protesilaos.com/emacs/spacious-padding>.
 
 #+toc: headlines 1 insert TOC here, with one headline level
 
+* Version 0.4.0 on 2024-03-04
+:PROPERTIES:
+:CUSTOM_ID: h:c55b9d00-cd72-4c65-ab4f-49c828e0f7d7
+:END:
+
+This version add some quality-of-life improvements to an already solid
+package.
+
+** The vertical border can now remain visible
+:PROPERTIES:
+:CUSTOM_ID: h:8e90009d-0052-4b28-a91e-9b081ca51ab5
+:END:
+
+The user option ~spacious-padding-widths~ is the single point of entry
+for all types of padding supported by the package. The property
+=:right-divider-width= applies to the vertical border between windows.
+When it is set to 1 pixel in width, it is no longer made invisible.
+Higher values do make it invisible, to produce the padding effect.
+
+Spacing between windows can still be increased by modifying the
+now-supported fringes (more below, including a code sample).
+
+Thanks to Aronne Raimondi for suggesting the possibility of a visible
+divider. This was done via a private channel and the information is
+shared with permission.
+
+** Add padding to the window fringes
+:PROPERTIES:
+:CUSTOM_ID: h:f82ed21a-0b10-4548-a53e-3b33edfd6c9c
+:END:
+
+The fringe area is the space to the left and right side of every
+window where indicators such as for line continuation/truncation are
+displayed. The user option ~spacious-padding-widths~ can now be
+configured to either (i) apply the same width to both fringes, per the
+=:fringe-width= property, or (ii) set different width values for
+either side with =:right-fringe-width= and =:left-fringe-width=.
+
+The default value is 8, which the standard width of fringes. This
+means that there is no visible change for users unless they opt to
+modify the relevant value.
+
+Sample using the default:
+
+#+begin_src emacs-lisp
+(setq spacious-padding-widths
+      '( :internal-border-width 15
+         :header-line-width 4
+         :mode-line-width 6
+         :tab-width 4
+         :right-divider-width 30
+         :fringe-width 20 ; Make both fringes 20 pixels wide
+         :scroll-bar-width 8))
+#+end_src
+
+Or this for individuated values:
+
+#+begin_src emacs-lisp
+(setq spacious-padding-widths
+      '( :internal-border-width 15
+         :header-line-width 4
+         :mode-line-width 6
+         :tab-width 4
+         :right-divider-width 30
+         :right-fringe-width 20 ; Make the right fringe 20 pixels wide
+         :left-fringe-width 8 ; Make the left fringe 8 pixels wide
+         :scroll-bar-width 8))
+#+end_src
+
+When combined with the aforementioned setting to keep the window
+divider visible, we can have something like this:
+
+#+begin_src emacs-lisp
+(setq spacious-padding-widths
+      '( :internal-border-width 15
+         :header-line-width 4
+         :mode-line-width 6
+         :tab-width 4
+         :right-divider-width 1 ; Keep a visible vertical line between windows
+         :fringe-width 20 ; Make both fringes 20 pixels wide
+         :scroll-bar-width 8))
+#+end_src
+
+** The built-in ~tab-line-mode~ is also covered
+:PROPERTIES:
+:CUSTOM_ID: h:55946767-3dd4-440e-9746-a519bb50d166
+:END:
+
+Previous versions of the package provided stylistic support for
+~tab-bar-mode~. This is now extended to ~tab-line-mode~. Thanks to
+Lucas Gruss for providing the impetus for this inclusion in pull
+request 6: <https://github.com/protesilaos/spacious-padding/pull/6>.
+
+Building on that, all tabbed interfaces are subject to the property
+=:tab-width= of the ~spaicous-padding-widths~. A granular
+configuration is also possible with the =:tab-bar-width= and
+=:tab-line-width=.
+
+Thanks again to Lucas Gruss for suggesting this arrangement. We
+discussed this as a follow-up to Lucas' contribution in commit
+1bbc076. The discussion took place in the context of pull request 6:
+<https://github.com/protesilaos/spacious-padding/pull/6>.
+
+Using the default value of ~spaicous-padding-widths~ as a starting
+point, we can thus have the following:
+
+#+begin_src emacs-lisp
+(setq spacious-padding-widths
+      '( :internal-border-width 15
+         :header-line-width 4
+         :mode-line-width 6
+         :tab-width 4 ; `tab-bar-mode' and `tab-line-mode' are uniform
+         :right-divider-width 30
+         :scroll-bar-width 8
+         :fringe-width 8))
+#+end_src
+
+Or this:
+
+#+begin_src emacs-lisp
+(setq spacious-padding-widths
+      '( :internal-border-width 15
+         :header-line-width 4
+         :mode-line-width 6
+         :tab-bar-width 4 ; `tab-bar-mode' has a padding of 4 pixels
+         :tab-line-width 2 ; `tab-line-mode' has a padding of 2 pixels
+         :right-divider-width 30
+         :scroll-bar-width 8
+         :fringe-width 8))
+#+end_src
+
+** No more SourceHut
+:PROPERTIES:
+:CUSTOM_ID: h:46668ba5-5ee2-4667-9342-4f501f853f13
+:END:
+
+Development continues on GitHub with GitLab as a mirror.
+
+I explained my reasons here: <https://protesilaos.com/codelog/2024-01-27-sourcehut-no-more/>.
+
+This is a change that affects all my Emacs packages.
+
+** Miscellaneous
+:PROPERTIES:
+:CUSTOM_ID: h:acdb0b3c-fcf4-455e-97f0-d377e106f8a7
+:END:
+
+- The properties of the user option ~spacious-padding-widths~ accept a
+  ~nil~ value when configured via the Custom user interface,
+  ~customize-set-variable~, ~setopt~, or related.
+
+- The ~vertical-border~ face is explicitly supported. This ensures
+  that colours are the way we need them to be.
+
+- The manual reflects all of the above.
+
 * Version 0.3.0 on 2023-12-21
 :PROPERTIES:
 :CUSTOM_ID: h:466dd7e0-c314-42a9-b1bc-a499acc5d415
