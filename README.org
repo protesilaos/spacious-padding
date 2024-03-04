@@ -98,28 +98,25 @@ value is used). Keys are keywords among the following:
 
 - ~:right-divider-width~ is the space between two side-by-side
   windows. If the value is less than 1, the border is not hidden when
-  ~spacious-padding-mode~ is enabled. [ The behaviour of preserving
-  the border when the width is 1 is part of {{{development-version}}}. ]
+  ~spacious-padding-mode~ is enabled.
 
 - ~:fringe-width~ applies to the fringes on either side of the window.
   The more specific keys ~:left-fringe-width~ and
   ~:right-fringe-wdith~ can be used for finer control. If those are
   not specified (or set to a nil value), they fall back to
   ~:fringe-width~. (The fringes are the window sides where line
-  wrapping and other indicators are displayed). [ All the
-  fringe-related keys are part of {{{development-version}}}. ]
+  wrapping and other indicators are displayed).
 
 - ~:tab-width~ concerns the padding around buttons of all tabbed
   interfaces (~tab-bar-mode~, ~tab-line-mode~).
 
 - ~:tab-bar-width~ concerns the padding around buttons of the
   ~tab-bar-mode~. If not specified (or set to nil) it uses the value
-  of ~:tab-width~. [ The ~:tab-bar-width~ is part of {{{development-version}}}.
-  Older versions used ~:tab-width~, which will continue to work. ]
+  of ~:tab-width~.
 
 - ~:tab-line-width~ concerns the padding around buttons of the
   tab-line. If not specified (or set to nil) it uses the value of
-  ~:tab-width~. [ The ~:tab-line-width~ is part of {{{development-version}}}. ]
+  ~:tab-width~.
 
 - ~:header-line-width~, ~mode-line-width~, ~scroll-bar-width~ point to
   the ~header-line~, ~mode-line~, and ~scroll-bar~, respectively.
@@ -282,8 +279,8 @@ help matters.
 
 + Contributions to code or the manual :: Lucas Gruss, Neo Dim.
 
-+ Ideas and/or user feedback :: Damien Cassou, Lucas Gruss, Nicolas
-  Semrau, Tomasz Hołubowicz.
++ Ideas and/or user feedback :: Aronne Raimondi, Damien Cassou, Lucas
+  Gruss, Nicolas Semrau, Tomasz Hołubowicz.
 
 Inspiration for this package comes from Nicolas Rougier's impressive
 designs and Daniel Mendler's ~org-modern~ package:
