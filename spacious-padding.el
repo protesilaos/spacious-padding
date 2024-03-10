@@ -241,15 +241,18 @@ overline."
     (let* ((original-bg (face-background face nil fallback))
            (subtle-bg (face-background 'default))
            (subtlep (and subtle-key spacious-padding-subtle-mode-line))
-           (bg (if subtlep subtle-bg original-bg)))
+           (bg (if subtlep subtle-bg original-bg))
+           (face-width (spacious-padding--get-face-width face)))
       `(,@(when subtlep
             (list
              :background bg
              :overline (spacious-padding--get-face-overline-color face fallback subtle-key)))
-        :box
-        ( :line-width ,(spacious-padding--get-face-width face)
-          :color ,bg
-          :style nil)))))
+        ,@(unless (eq face-width 0)
+            (list
+             :box
+             `( :line-width ,face-width
+                :color ,bg
+                :style nil)))))))
 
 (defun spacious-padding-set-window-divider (face color)
   "Set window divider FACE to COLOR its width is greater than 1."
