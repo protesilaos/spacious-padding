@@ -13,6 +13,72 @@ the manual: <https://protesilaos.com/emacs/spacious-padding>.
 
 #+toc: headlines 1 insert TOC here, with one headline level
 
+* Version 0.5.0 on 2024-04-29
+:PROPERTIES:
+:CUSTOM_ID: h:898a32fb-3156-4468-831c-898cca0004fc
+:END:
+
+This is a bug fix release.
+
+** Starting a frame from the daemon/server works as well
+:PROPERTIES:
+:CUSTOM_ID: h:4bd92ecd-f149-4373-890a-0981eb3109a2
+:END:
+
+Before, if Emacs would start as a new server process via a client, it
+would not set the faces and the frame parameters correctly.
+
+I have made sure this no longer happens, so the padding/spacing should
+look as expected at startup no matter what.
+
+Thanks to tusharhero and Julian Flake for reporting this and testing
+the updated code. It was done in issue 13:
+<https://github.com/protesilaos/spacious-padding/issues/13>.
+
+** The padding of relevant elements can be set to 0
+:PROPERTIES:
+:CUSTOM_ID: h:c93428b9-54cb-4590-a977-d555533f3339
+:END:
+
+This concerns anything that has a box with padding around it. From the
+user option ~spacious-padding-widths~, we have the following
+attributes:
+
+- ~:tab-width~
+- ~:tab-bar-width~
+- ~:tab-line-width~
+- ~:header-line-width~
+- ~:mode-line-width~
+
+Thanks to Ruby Iris Juric for the contribution. It was done in pull
+request 7: <https://github.com/protesilaos/spacious-padding/pull/7>.
+
+The change is less than the 15-line limit, so Ruby does not need to
+assign copyright to the Free Software foundation.
+
+** The right-divider-width has a fallback value at all times
+:PROPERTIES:
+:CUSTOM_ID: h:f4ddf392-c8db-42f4-8d9e-19d991da47a5
+:END:
+
+This means that even if the =:right-divider-width= is not included in
+the value of ~spacious-padding-widths~, there will still be a padding
+in place. We were already doing this for other scenaria, but not for
+this specific case. Thanks to Stefano Rodighiero for bringing this
+matter to my attention in issue 11:
+<https://github.com/protesilaos/spacious-padding/issues/11>.
+
+** Reasonable defaults even if ~spacious-padding-widths~ is set to nil
+:PROPERTIES:
+:CUSTOM_ID: h:afc3170b-b575-4776-ab17-09763e99a655
+:END:
+
+All the attributes of the ~spacious-padding-widths~ should be optional
+and the value could even be nil. We take care internally to use a
+reasonable fallback value. We do this on the assumption that the user
+who enables ~spacious-padding-mode~ does actually want "spacious
+padding" and not something that does nothing.
+
 * Version 0.4.0 on 2024-03-04
 :PROPERTIES:
 :CUSTOM_ID: h:c55b9d00-cd72-4c65-ab4f-49c828e0f7d7
