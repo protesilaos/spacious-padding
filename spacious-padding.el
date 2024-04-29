@@ -261,8 +261,11 @@ overline."
    `((t ,(when (> (plist-get spacious-padding-widths :right-divider-width) 1)
            (list :background color :foreground color))))))
 
-(defun spacious-padding-set-invisible-dividers (_theme)
-  "Make window dividers for THEME invisible."
+(defun spacious-padding-set-invisible-dividers (&rest _)
+  "Make window dividers invisible and add padding.
+Ignore any arguments.  This is useful to add the function to abnormal
+hooks that pass one or more arguments to it, such as
+`after-make-frame-functions'."
   (let ((bg-main (face-background 'default))
         (fg-main (face-foreground 'default)))
     (custom-set-faces
