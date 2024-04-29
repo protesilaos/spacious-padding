@@ -271,7 +271,13 @@ overline."
       ,(when (> (spacious-padding--get-right-divider-width) 1)
          (list :background color :foreground color))))))
 
-(defun spacious-padding-set-invisible-dividers (&rest _)
+(define-obsolete-function-alias
+  'spacious-padding-set-invisible-dividers
+  'spacious-padding-set-faces
+  "0.5.0")
+
+;;;###autoload
+(defun spacious-padding-set-faces (&rest _)
   "Make window dividers invisible and add padding.
 Ignore any arguments.  This is useful to add the function to abnormal
 hooks that pass one or more arguments to it, such as
@@ -395,16 +401,16 @@ parameter values."
   "Enable `spacious-padding-mode'."
   (spacious-padding--store-default-parameters)
   (spacious-padding-modify-frame-parameters nil)
-  (spacious-padding-set-invisible-dividers nil)
-  (add-hook 'enable-theme-functions #'spacious-padding-set-invisible-dividers)
   (add-hook 'after-make-frame-functions #'spacious-padding-set-invisible-dividers))
+  (spacious-padding-set-faces nil)
+  (add-hook 'enable-theme-functions #'spacious-padding-set-faces)
 
 (defun spacious-padding--disable-mode ()
   "Disable `spacious-padding-mode'."
   (spacious-padding-modify-frame-parameters :reset)
   (spacious-padding-unset-invisible-dividers)
-  (remove-hook 'enable-theme-functions #'spacious-padding-set-invisible-dividers)
   (remove-hook 'after-make-frame-functions #'spacious-padding-set-invisible-dividers))
+  (remove-hook 'enable-theme-functions #'spacious-padding-set-faces)
 
 ;;;###autoload
 (define-minor-mode spacious-padding-mode
