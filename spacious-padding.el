@@ -386,13 +386,15 @@ parameter values."
   (spacious-padding--store-default-parameters)
   (spacious-padding-modify-frame-parameters nil)
   (spacious-padding-set-invisible-dividers nil)
-  (add-hook 'enable-theme-functions #'spacious-padding-set-invisible-dividers))
+  (add-hook 'enable-theme-functions #'spacious-padding-set-invisible-dividers)
+  (add-hook 'after-make-frame-functions #'spacious-padding-set-invisible-dividers))
 
 (defun spacious-padding--disable-mode ()
   "Disable `spacious-padding-mode'."
   (spacious-padding-modify-frame-parameters :reset)
   (spacious-padding-unset-invisible-dividers)
-  (remove-hook 'enable-theme-functions #'spacious-padding-set-invisible-dividers))
+  (remove-hook 'enable-theme-functions #'spacious-padding-set-invisible-dividers)
+  (remove-hook 'after-make-frame-functions #'spacious-padding-set-invisible-dividers))
 
 ;;;###autoload
 (define-minor-mode spacious-padding-mode

@@ -280,8 +280,8 @@ help matters.
 + Contributions to code or the manual :: Lucas Gruss, Neo Dim, Ruby
   Iris Juric.
 
-+ Ideas and/or user feedback :: Aronne Raimondi, Damien Cassou, Lucas
-  Gruss, Nicolas Semrau, Tomasz Hołubowicz.
++ Ideas and/or user feedback :: Aronne Raimondi, Damien Cassou, Julian
+  Flake, Lucas Gruss, Nicolas Semrau, Tomasz Hołubowicz, tusharhero.
 
 Inspiration for this package comes from Nicolas Rougier's impressive
 designs and Daniel Mendler's ~org-modern~ package:
