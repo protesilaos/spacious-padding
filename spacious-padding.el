@@ -96,7 +96,9 @@ following:
   point to the header-line, mode-line, and scroll-bar,
   respectively.
 
-For the technicalities, read Info node `(elisp) Frame Layout'."
+For the technicalities, read Info node `(elisp) Frame Layout'.
+
+When the value is nil, fall back to reasonable defaults."
   :type '(plist
           :key-type (choice (const :internal-border-width)
                             (const :right-divider-width)
