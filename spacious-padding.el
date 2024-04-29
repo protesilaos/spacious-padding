@@ -402,7 +402,7 @@ parameter values."
   (spacious-padding--store-default-parameters)
   (spacious-padding-modify-frame-parameters nil)
   (add-hook 'after-make-frame-functions #'spacious-padding-set-invisible-dividers))
-  (spacious-padding-set-faces nil)
+  (spacious-padding-set-faces)
   (add-hook 'enable-theme-functions #'spacious-padding-set-faces)
 
 (defun spacious-padding--disable-mode ()
