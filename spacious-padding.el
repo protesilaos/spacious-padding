@@ -384,7 +384,7 @@ parameter value."
 (spacious-padding--define-get-frame-param "right-fringe-width" nil)
 (spacious-padding--define-get-frame-param "scroll-bar-width" 8)
 
-(defun spacious-padding-modify-frame-parameters (reset)
+(defun spacious-padding-modify-frame-parameters (&optional reset)
   "Modify all frame parameters to specify spacing.
 With optional RESET argument as non-nil, restore the default
 parameter values."
@@ -397,20 +397,27 @@ parameter values."
                           (spacious-padding--get-fringe-width reset)))
      (scroll-bar-width  . ,(spacious-padding--get-scroll-bar-width reset)))))
 
+;;;###autoload
+(defun spacious-padding-set-parameters-of-frame (frame)
+  "Set the layout parameters of FRAME and update the faces."
+  (with-selected-frame frame
+    (spacious-padding-modify-frame-parameters)
+    (spacious-padding-set-faces)))
+
 (defun spacious-padding--enable-mode ()
   "Enable `spacious-padding-mode'."
   (spacious-padding--store-default-parameters)
-  (spacious-padding-modify-frame-parameters nil)
-  (add-hook 'after-make-frame-functions #'spacious-padding-set-invisible-dividers))
+  (spacious-padding-modify-frame-parameters)
   (spacious-padding-set-faces)
   (add-hook 'enable-theme-functions #'spacious-padding-set-faces)
+  (add-hook 'after-make-frame-functions #'spacious-padding-set-parameters-of-frame))
 
 (defun spacious-padding--disable-mode ()
   "Disable `spacious-padding-mode'."
   (spacious-padding-modify-frame-parameters :reset)
   (spacious-padding-unset-invisible-dividers)
-  (remove-hook 'after-make-frame-functions #'spacious-padding-set-invisible-dividers))
   (remove-hook 'enable-theme-functions #'spacious-padding-set-faces)
+  (remove-hook 'after-make-frame-functions #'spacious-padding-set-parameters-of-frame))
 
 ;;;###autoload
 (define-minor-mode spacious-padding-mode
