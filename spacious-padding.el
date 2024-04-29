@@ -371,12 +371,12 @@ parameter value."
         (plist-get spacious-padding-widths ,(intern (concat ":" parameter))))
       ,fallback)))
 
-(spacious-padding--define-get-frame-param "internal-border-width" 0)
-(spacious-padding--define-get-frame-param "right-divider-width" 1)
+(spacious-padding--define-get-frame-param "internal-border-width" 15)
+(spacious-padding--define-get-frame-param "right-divider-width" 30)
 (spacious-padding--define-get-frame-param "fringe-width" 8)
 (spacious-padding--define-get-frame-param "left-fringe-width" nil)
 (spacious-padding--define-get-frame-param "right-fringe-width" nil)
-(spacious-padding--define-get-frame-param "scroll-bar-width" 16)
+(spacious-padding--define-get-frame-param "scroll-bar-width" 8)
 
 (defun spacious-padding-modify-frame-parameters (reset)
   "Modify all frame parameters to specify spacing.
