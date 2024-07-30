@@ -282,7 +282,7 @@ help matters.
 
 + Ideas and/or user feedback :: Aronne Raimondi, Damien Cassou, Julian
   Flake, Lucas Gruss, Nicolas Semrau, Stefano Rodighiero, Tomasz
-  Hołubowicz, tusharhero.
+  Hołubowicz, domsch1988, tusharhero.
 
 Inspiration for this package comes from Nicolas Rougier's impressive
 designs and Daniel Mendler's ~org-modern~ package:

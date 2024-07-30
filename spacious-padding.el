@@ -196,7 +196,7 @@ Examples of valid configurations:
   "Tab faces relevant to `spacious-padding-mode'.")
 
 (defvar spacious-padding--tab-line-faces
-  '(tab-line tab-line-tab tab-line-tab-inactive)
+  '(tab-line tab-line-tab tab-line-tab-inactive tab-line-tab-current)
   "Tab faces relevant to `spacious-padding-mode'.")
 
 (defun spacious-padding--get-right-divider-width (&optional no-fallback)
@@ -302,6 +302,7 @@ hooks that pass one or more arguments to it, such as
      `(tab-line-tab ((t ,@(spacious-padding-set-face-box-padding 'tab-line-tab 'tab-line))))
      `(tab-line-tab-inactive ((t ,@(spacious-padding-set-face-box-padding 'tab-line-tab-inactive 'tab-line))))
      `(tab-line-tab-active ((t ,@(spacious-padding-set-face-box-padding 'tab-line-tab-active 'tab-line))))
+     `(tab-line-tab-current ((t ,@(spacious-padding-set-face-box-padding 'tab-line-tab-current 'tab-line))))
      `(vertical-border ((t :background ,bg-main :foreground ,bg-main)))
      `(,@(spacious-padding-set-window-divider 'window-divider bg-main))
      `(,@(spacious-padding-set-window-divider 'window-divider-first-pixel bg-main))
