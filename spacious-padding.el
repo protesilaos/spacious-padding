@@ -199,7 +199,7 @@ Examples of valid configurations:
   '(tab-line tab-line-tab tab-line-tab-inactive tab-line-tab-current)
   "Tab faces relevant to `spacious-padding-mode'.")
 
-(defun spacious-padding--get-right-divider-width (&optional no-fallback)
+(defun spacious-padding--get-window-divider-width (&optional no-fallback)
   "Get the width of window divider.
 With optional NO-FALLBACK return nil if there is no value.  Else return
 a reasonable fallback value."
@@ -270,7 +270,7 @@ overline."
   (list
    face
    `((t
-      ,(when (> (spacious-padding--get-right-divider-width) 1)
+      ,(when (> (spacious-padding--get-window-divider-width) 1)
          (list :background color :foreground color))))))
 
 (define-obsolete-function-alias
