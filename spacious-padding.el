@@ -412,6 +412,7 @@ parameter values."
   (spacious-padding--store-default-parameters)
   (spacious-padding-modify-frame-parameters)
   (spacious-padding-set-faces)
+  (add-hook 'window-divider-mode-hook #'spacious-padding--enable-mode)
   (add-hook 'enable-theme-functions #'spacious-padding-set-faces)
   (add-hook 'after-make-frame-functions #'spacious-padding-set-parameters-of-frame))
 
@@ -419,6 +420,7 @@ parameter values."
   "Disable `spacious-padding-mode'."
   (spacious-padding-modify-frame-parameters :reset)
   (spacious-padding-unset-invisible-dividers)
+  (remove-hook 'window-divider-mode-hook #'spacious-padding--enable-mode)
   (remove-hook 'enable-theme-functions #'spacious-padding-set-faces)
   (remove-hook 'after-make-frame-functions #'spacious-padding-set-parameters-of-frame))
 
