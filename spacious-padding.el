@@ -285,8 +285,10 @@ Ignore any arguments.  This is useful to add the function to abnormal
 hooks that pass one or more arguments to it, such as
 `after-make-frame-functions'."
   (let ((bg-main (face-background 'default))
-        (fg-main (face-foreground 'default)))
-    (custom-set-faces
+        (fg-main (face-foreground 'default))
+        custom--inhibit-theme-enable)
+    (custom-theme-set-faces
+     'changed
      `(fringe ((t :background ,bg-main)))
      `(line-number ((t :background ,bg-main)))
      `(header-line ((t ,@(spacious-padding-set-face-box-padding 'header-line 'default))))
@@ -310,24 +312,26 @@ hooks that pass one or more arguments to it, such as
 
 (defun spacious-padding-unset-invisible-dividers ()
   "Make window dividers for THEME invisible."
-  (custom-set-faces
-   '(fringe (( )))
-   '(line-number (( )))
-   '(header-line (( )))
-   '(keycast-key (( )))
-   '(header-line-highlight (( )))
-   '(mode-line (( )))
-   '(mode-line-active (( )))
-   '(mode-line-inactive (( )))
-   '(mode-line-highlight (( )))
-   '(tab-bar-tab (( )))
-   '(tab-bar-tab-inactive (( )))
-   '(tab-line-tab (( )))
-   '(tab-line-tab-inactive (( )))
-   `(vertical-border (( )))
-   '(window-divider (( )))
-   '(window-divider-first-pixel (( )))
-   '(window-divider-last-pixel (( )))))
+  (let (custom--inhibit-theme-enable)
+    (custom-theme-set-faces
+     'changed
+     '(fringe (( )))
+     '(line-number (( )))
+     '(header-line (( )))
+     '(keycast-key (( )))
+     '(header-line-highlight (( )))
+     '(mode-line (( )))
+     '(mode-line-active (( )))
+     '(mode-line-inactive (( )))
+     '(mode-line-highlight (( )))
+     '(tab-bar-tab (( )))
+     '(tab-bar-tab-inactive (( )))
+     '(tab-line-tab (( )))
+     '(tab-line-tab-inactive (( )))
+     `(vertical-border (( )))
+     '(window-divider (( )))
+     '(window-divider-first-pixel (( )))
+     '(window-divider-last-pixel (( ))))))
 
 (defvar spacious-padding--internal-border-width nil
   "Default value of frame parameter `internal-border-width'.")
