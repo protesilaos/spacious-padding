@@ -53,6 +53,18 @@
   :group 'faces
   :group 'frames)
 
+;; NOTE 2025-01-06: This is what `use-package' does with its own
+;; theme, so it is probably the right approach for us too.
+(eval-and-compile
+  ;; Declare a synthetic theme for :custom variables.
+  ;; Necessary in order to avoid having those variables saved by custom.el.
+  (deftheme spacious-padding))
+
+(enable-theme 'spacious-padding)
+;; Remove the synthetic spacious-padding theme from the enabled themes, so
+;; iterating over them to "disable all themes" won't disable it.
+(setq custom-enabled-themes (remq 'spacious-padding custom-enabled-themes))
+
 (defcustom spacious-padding-widths
   '( :internal-border-width 15
      :header-line-width 4
@@ -288,7 +300,7 @@ hooks that pass one or more arguments to it, such as
         (fg-main (face-foreground 'default))
         custom--inhibit-theme-enable)
     (custom-theme-set-faces
-     'changed
+     'spacious-padding
      `(fringe ((t :background ,bg-main)))
      `(line-number ((t :background ,bg-main)))
      `(header-line ((t ,@(spacious-padding-set-face-box-padding 'header-line 'default))))
@@ -314,7 +326,7 @@ hooks that pass one or more arguments to it, such as
   "Make window dividers for THEME invisible."
   (let (custom--inhibit-theme-enable)
     (custom-theme-set-faces
-     'changed
+     'spacious-padding
      '(fringe (( )))
      '(line-number (( )))
      '(header-line (( )))
