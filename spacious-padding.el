@@ -127,6 +127,24 @@ When the value is nil, fall back to reasonable defaults."
   :package-version '(spacious-padding . "0.4.0")
   :group 'spacious-padding)
 
+(defface spacious-padding-subtle-mode-line-active
+  '((((class color) (min-colors 88) (background light))
+     :foreground "#0033dd")
+    (((class color) (min-colors 88) (background dark))
+     :foreground "#88aaff"))
+  "Optional face for the active mode line.
+This is something the user can defined per the documentation of
+`spacious-padding-subtle-mode-line'.")
+
+(defface spacious-padding-subtle-mode-line-inactive
+  '((((class color) (min-colors 88) (background light))
+     :foreground "#cfcfcf")
+    (((class color) (min-colors 88) (background dark))
+     :foreground "#585858"))
+  "Optional face for the inactive mode line.
+This is something the user can defined per the documentation of
+`spacious-padding-subtle-mode-line'.")
+
 (defcustom spacious-padding-subtle-mode-line nil
   "Remove the background from the mode lines and add overlines.
 
@@ -180,7 +198,12 @@ Examples of valid configurations:
 
     ;; Use color values directly.
     (setq spacious-padding-subtle-mode-line
-          \\='(:mode-line-active \"#0000ff\" :mode-line-inactive \"gray50\"))"
+          \\='(:mode-line-active \"#0000ff\" :mode-line-inactive \"gray50\"))
+
+For the convenience of the user, we define the faces
+`spacious-padding-subtle-mode-line-active' and
+`spacious-padding-subtle-mode-line-inactive', which can be used as
+described above."
   :type '(choice boolean
                  (plist
                   :key-type (choice (const :mode-line-active)
