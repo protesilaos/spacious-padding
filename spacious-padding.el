@@ -325,7 +325,7 @@ hooks that pass one or more arguments to it, such as
     (custom-theme-set-faces
      'spacious-padding
      `(fringe ((t :background ,bg-main)))
-     `(line-number ((t :background ,bg-main)))
+     `(line-number ((t :background ,bg-main :inherit default)))
      `(header-line ((t ,@(spacious-padding-set-face-box-padding 'header-line 'default))))
      `(header-line-highlight ((t :box (:color ,fg-main))))
      `(keycast-key ((t ,@(spacious-padding-set-face-box-padding 'keycast-key 'default))))
