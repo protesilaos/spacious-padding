@@ -4,9 +4,9 @@
 #+language: en
 #+options: ':t toc:nil author:t email:t num:t
 #+startup: content
-#+macro: stable-version 0.6.0
-#+macro: release-date 2025-01-06
-#+macro: development-version 0.7.0-dev
+#+macro: stable-version 0.7.0
+#+macro: release-date 2025-06-01
+#+macro: development-version 0.8.0-dev
 #+export_file_name: spacious-padding.texi
 #+texinfo_filename: spacious-padding.info
 #+texinfo_dir_category: Emacs misc features
@@ -181,8 +181,6 @@ Examples of valid configurations:
 (setq spacious-padding-subtle-mode-line
       '(:mode-line-active "#0000ff" :mode-line-inactive "gray50"))
 #+end_src
-
-[ The following two faces are part of {{{development-version}}}. ]
 
 #+vindex: spacious-padding-subtle-mode-line-active
 #+vindex: spacious-padding-subtle-mode-line-inactive
