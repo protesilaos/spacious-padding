@@ -447,6 +447,12 @@ parameter values."
   (spacious-padding-modify-frame-parameters frame)
   (spacious-padding-set-faces))
 
+;;;###autoload
+(defun spacious-padding-set-parameters-of-selected-frame ()
+  "Use `spacious-padding-set-parameters-of-frame' for the `selected-frame'."
+  (when-let* ((frame (selected-frame)))
+    (spacious-padding-set-parameters-of-frame frame)))
+
 (defun spacious-padding--enable-mode ()
   "Enable `spacious-padding-mode'."
   (spacious-padding--store-default-parameters)
@@ -454,7 +460,8 @@ parameter values."
   (spacious-padding-set-faces)
   (add-hook 'window-divider-mode-hook #'spacious-padding--enable-mode)
   (add-hook 'enable-theme-functions #'spacious-padding-set-faces)
-  (add-hook 'after-make-frame-functions #'spacious-padding-set-parameters-of-frame))
+  (add-hook 'after-make-frame-functions #'spacious-padding-set-parameters-of-frame)
+  (add-hook 'server-after-make-frame-hook #'spacious-padding-set-parameters-of-selected-frame))
 
 (defun spacious-padding--disable-mode ()
   "Disable `spacious-padding-mode'."
@@ -462,7 +469,8 @@ parameter values."
   (spacious-padding-unset-invisible-dividers)
   (remove-hook 'window-divider-mode-hook #'spacious-padding--enable-mode)
   (remove-hook 'enable-theme-functions #'spacious-padding-set-faces)
-  (remove-hook 'after-make-frame-functions #'spacious-padding-set-parameters-of-frame))
+  (remove-hook 'after-make-frame-functions #'spacious-padding-set-parameters-of-frame)
+  (remove-hook 'server-after-make-frame-hook #'spacious-padding-set-parameters-of-selected-frame))
 
 ;;;###autoload
 (define-minor-mode spacious-padding-mode
