@@ -32,7 +32,7 @@
 ;; `spacious-padding-mode'.  Adjust the exact spacing values by
 ;; modifying the user option `spacious-padding-widths'.  To have a
 ;; more subtle mode line, with nothing but an overline, configure the
-;; user option `spacious-padding-subtle-mode-line'.
+;; user option `spacious-padding-subtle-frame-lines'.
 ;;
 ;; Inspiration for this package comes from Nicolas Rougier's
 ;; impressive designs[1] and Daniel Mendler's `org-modern`
@@ -127,40 +127,64 @@ When the value is nil, fall back to reasonable defaults."
   :package-version '(spacious-padding . "0.4.0")
   :group 'spacious-padding)
 
-(defface spacious-padding-subtle-mode-line-active
+(define-obsolete-face-alias
+ 'spacious-padding-subtle-mode-line-active
+ 'spacious-padding-line-active
+ "0.8.0")
+
+(defface spacious-padding-line-active
   '((((class color) (min-colors 88) (background light))
      :foreground "#0033dd")
     (((class color) (min-colors 88) (background dark))
      :foreground "#88aaff"))
   "Optional face for the active mode line.
 This is something the user can defined per the documentation of
-`spacious-padding-subtle-mode-line'.")
+`spacious-padding-subtle-frame-lines'.")
 
-(defface spacious-padding-subtle-mode-line-inactive
+(define-obsolete-face-alias
+ 'spacious-padding-subtle-mode-line-inactive
+ 'spacious-padding-line-inactive
+ "0.8.0")
+
+(defface spacious-padding-line-inactive
   '((((class color) (min-colors 88) (background light))
      :foreground "#cfcfcf")
     (((class color) (min-colors 88) (background dark))
      :foreground "#585858"))
   "Optional face for the inactive mode line.
 This is something the user can defined per the documentation of
-`spacious-padding-subtle-mode-line'.")
+`spacious-padding-subtle-frame-lines'.")
 
-(defcustom spacious-padding-subtle-mode-line nil
-  "Remove the background from the mode lines and add overlines.
+(define-obsolete-variable-alias
+  'spacious-padding-subtle-mode-line
+  'spacious-padding-subtle-frame-lines
+  "0.8.0")
+
+(defcustom spacious-padding-subtle-frame-lines nil
+  "Remove the background from the mode/header lines and add over-/under- lines.
 
 Preserve whatever padding is specified in `spacious-padding-widths'.
 
-The value is either a boolean type or a plist.  If it is non-nil,
-use the foreground of the underlying mode line face to derive the
-color of the overline.
+Mode lines get an overline, while header lines get an underline.
 
-If the non-nil value is a plist read the following keys to
-determine the exact style of the overlines.
+The value of this variable either a boolean type or a plist.  If it is
+simply non-nil, use the foreground of the underlying frame line
+face (e.g. `mode-line-active') to derive the color of the overline or
+underline.
+
+If the non-nil value is a plist in particular read the following keys to
+determine the exact style of the overlines or underlines.
 
 - `:mode-line-active' refers to the active/current mode line.
 
-- `:mode-line-inactive' refers to the inactive/non-current mode
-  lines.
+- `:mode-line-inactive' refers to the inactive/non-current mode lines.
+
+- `:header-line-active' refers to the active/current header line.  In
+  versions of Emacs before 31, there is no such distinction: all header
+  lines are active.
+
+- `:header-line-inactive' refers to the inactive/non-current header
+  lines, which only exist in Emacs 31 or higher.
 
 Each key accepts either a face or a string representing a color
 as its associated value:
@@ -174,42 +198,64 @@ as its associated value:
   as #123456.
 
 If the key is missing or its value is not one of the above, fall
-back to reading the foreground of the underlying mode line face
-to determine the color of the overline.
+back to reading the foreground of the underlying frame line face
+to determine the color of the overline or underline.
 
 Examples of valid configurations:
 
     ;; Use the foreground of the underlying face to determine the color of
     ;; the overline (e.g. the inactive mode line has gray text, so render
     ;; the overline in the same gray).
-    (setq spacious-padding-subtle-mode-line t)
+    (setq spacious-padding-subtle-frame-lines t)
 
     ;; Use the foreground of the `error' face (typically a red hue) for
     ;; the active mode line's overline.  For the inactive mode line, fall
     ;; back to the foreground color of the underlying face (as in the case
-    ;; of the t shown above).
-    (setq spacious-padding-subtle-mode-line
+    ;; of the t shown above).  Same idea for the header lines.
+    (setq spacious-padding-subtle-frame-lines
           \\='(:mode-line-active error))
 
     ;; As above, but now use the foreground of the `shadow' face for the
     ;; inactive mode line.
-    (setq spacious-padding-subtle-mode-line
+    (setq spacious-padding-subtle-frame-lines
           \\='(:mode-line-active error :mode-line-inactive shadow))
 
     ;; Use color values directly.
-    (setq spacious-padding-subtle-mode-line
+    (setq spacious-padding-subtle-frame-lines
           \\='(:mode-line-active \"#0000ff\" :mode-line-inactive \"gray50\"))
 
 For the convenience of the user, we define the faces
-`spacious-padding-subtle-mode-line-active' and
-`spacious-padding-subtle-mode-line-inactive', which can be used as
-described above."
+`spacious-padding-line-active' and `spacious-padding-line-inactive',
+which can be used as described above.  Another example:
+
+    ;; A complete configuration for mode line and header lines which uses
+    ;; the faces defined by Spacious Padding.
+    (setq spacious-padding-subtle-frame-lines
+          \\='( :mode-line-active spacious-padding-line-active
+             :mode-line-inactive spacious-padding-line-inactive
+             :header-line-active spacious-padding-line-active
+             :header-line-inactive spacious-padding-line-inactive))
+
+For optimal results with underlines, set `x-underline-at-descent-line'
+to a non-nil value."
   :type '(choice boolean
                  (plist
                   :key-type (choice (const :mode-line-active)
-                                    (const :mode-line-inactive))
+                                    (const :mode-line-inactive)
+                                    (const :header-line-active)
+                                    (const :header-line-inactive))
                   :value-type (choice string face)))
-  :package-version '(spacious-padding . "0.3.0")
+  :package-version '(spacious-padding . "0.8.0")
+  :group 'spacious-padding)
+
+(defcustom spacious-padding-subtle-header-line nil
+  "When non-nil, make header lines use an underline."
+    :type '(choice boolean
+                 (plist
+                  :key-type (choice (const :header-line-active)
+                                    (const :header-line-inactive))
+                  :value-type (choice string face)))
+  :package-version '(spacious-padding . "0.8.0")
   :group 'spacious-padding)
 
 ;; NOTE 2023-12-05: The `keycast-key' should preferably be
@@ -223,7 +269,7 @@ described above."
   "Mode line faces relevant to `spacious-padding-mode'.")
 
 (defvar spacious-padding--header-line-faces
-  '(header-line header-line-highlight)
+  '(header-line header-line-highlight header-line-inactive)
   "Header line faces relevant to `spacious-padding-mode'.")
 
 (defvar spacious-padding--tab-bar-faces
@@ -270,9 +316,9 @@ is non-nil, do not return a fallback value: just nil."
 (defun spacious-padding--get-face-overline-color (face fallback subtle-key)
   "Get overline foreground value for FACE with FALLBACK face if needed.
 Use SUBTLE-KEY to determine the value based on
-`spacious-padding-subtle-mode-line', falling back to FACE, then
+`spacious-padding-subtle-frame-lines', falling back to FACE, then
 FALLBACK."
-  (let ((subtle-value (plist-get spacious-padding-subtle-mode-line subtle-key)))
+  (let ((subtle-value (plist-get spacious-padding-subtle-frame-lines subtle-key)))
     (cond
      ((stringp subtle-value) subtle-value)
      ((facep subtle-value) (face-foreground subtle-value nil face))
@@ -281,18 +327,21 @@ FALLBACK."
 (defun spacious-padding-set-face-box-padding (face fallback &optional subtle-key)
   "Return face attributes for FACE with FALLBACK face background.
 With optional SUBTLE-KEY, read its value from the
-`spacious-padding-subtle-mode-line' and apply it to FACE as an
+`spacious-padding-subtle-frame-lines' and apply it to FACE as an
 overline."
   (when (facep face)
     (let* ((original-bg (face-background face nil fallback))
            (subtle-bg (face-background 'default))
-           (subtlep (and subtle-key spacious-padding-subtle-mode-line))
+           (subtlep (and subtle-key spacious-padding-subtle-frame-lines))
            (bg (if subtlep subtle-bg original-bg))
            (face-width (spacious-padding--get-face-width face)))
       `(,@(when subtlep
-            (list
-             :background bg
-             :overline (spacious-padding--get-face-overline-color face fallback subtle-key)))
+            (flatten-list
+             (list
+              :background bg
+              (if (memq subtle-key '(:header-line-active :header-line-inactive))
+                  (list :underline (spacious-padding--get-face-overline-color face fallback subtle-key))
+                (list :overline (spacious-padding--get-face-overline-color face fallback subtle-key))))))
         ,@(unless (eq face-width 0)
             (list
              :box
@@ -326,7 +375,8 @@ hooks that pass one or more arguments to it, such as
      'spacious-padding
      `(fringe ((t :background ,bg-main)))
      `(line-number ((t :background ,bg-main)))
-     `(header-line ((t ,@(spacious-padding-set-face-box-padding 'header-line 'default))))
+     `(header-line ((t ,@(spacious-padding-set-face-box-padding 'header-line 'default :header-line-active))))
+     `(header-line-inactive ((t ,@(spacious-padding-set-face-box-padding 'header-line-inactive 'shadow :header-line-inactive))))
      `(header-line-highlight ((t :box (:color ,fg-main))))
      `(keycast-key ((t ,@(spacious-padding-set-face-box-padding 'keycast-key 'default))))
      `(mode-line ((t ,@(spacious-padding-set-face-box-padding 'mode-line 'default :mode-line-active))))
@@ -353,6 +403,7 @@ hooks that pass one or more arguments to it, such as
      '(fringe (( )))
      '(line-number (( )))
      '(header-line (( )))
+     '(header-line-inactive (( )))
      '(keycast-key (( )))
      '(header-line-highlight (( )))
      '(mode-line (( )))

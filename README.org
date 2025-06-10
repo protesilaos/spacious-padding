@@ -121,28 +121,40 @@ value is used). Keys are keywords among the following:
 - ~:header-line-width~, ~mode-line-width~, ~scroll-bar-width~ point to
   the ~header-line~, ~mode-line~, and ~scroll-bar~, respectively.
 
-** Make the mode line subtle
+** Make the mode and header lines subtle
 :PROPERTIES:
 :CUSTOM_ID: h:cffe3c7e-9f67-4147-8ada-edfcc4cf979e
 :END:
 
-#+vindex: spacious-padding-subtle-mode-line
+[ As part of {{{development-version}}}, the user option is now called
+  ~spacious-padding-subtle-frame-lines~ instead of ~spacious-padding-subtle-mode-line~.
+  Header line faces are covered as well. ]
+
+#+vindex: spacious-padding-subtle-frame-lines
 By default, ~spacious-padding-mode~ does not refashion the mode lines
-other than adding to them some extra padding ([[#h:eb0ce65d-6b44-42db-ab22-aad3ac5c0c1b][Set the exact spacing values]]).
-The user option ~spacious-padding-subtle-mode-line~ does change the
-mode lines so that instead of a background they only have an overline,
-while preserving whatever padding is in effect.
+or header lines other than adding to them some extra padding ([[#h:eb0ce65d-6b44-42db-ab22-aad3ac5c0c1b][Set the exact spacing values]]).
+The user option ~spacious-padding-subtle-frame-lines~ does change the
+mode lines so that instead of a background they only have an overline
+or underlineq, while preserving whatever padding is in effect.
 
-The value bound to ~spacious-padding-subtle-mode-line~ is either a
-boolean type or a plist. If it is non-nil, use the foreground of the
-underlying mode line face to derive the color of the overline.
+The value bound to ~spacious-padding-subtle-frame-lines~ is either a
+boolean type or a plist.
 
-If the non-nil value is a plist read the following keys to determine
-the exact style of the overlines.
+If it is simply non-nil, ~spacious-padding-mode~ will use the
+foreground of the underlying frame line face (e.g. ~mode-line-active~)
+to derive the color of the overline or underline.
+
+If the non-nil value is a plist in particular, ~spacious-padding-mode~
+reads the following keys to determine the exact style of the overlines
+or underlines.
 
 - ~:mode-line-active~ refers to the active/current mode line.
-
 - ~:mode-line-inactive~ refers to the inactive/non-current mode lines.
+- ~:header-line-active~ refers to the active header line.
+- ~:header-line-inactive~ refers to the inactive header lines. The
+  distinction between active and inactive header lines only applies to
+  Emacs version 31 or higher. Earlier versions treat all header lines
+  the same.
 
 Each key accepts either a face or a string representing a color as its
 associated value:
@@ -163,31 +175,42 @@ Examples of valid configurations:
 ;; Use the foreground of the underlying mode line face to determine
 ;; the color of the overline (e.g. the inactive mode line has gray
 ;; text, so render the overline in the same gray).
-(setq spacious-padding-subtle-mode-line t)
+(setq spacious-padding-subtle-frame-lines t)
 
 ;; Use the foreground of the `error' face (typically a red hue) for
 ;; the active mode line's overline.  For the inactive mode line, fall
 ;; back to the foreground color of the underlying face (as in the case
 ;; of the t shown above).
-(setq spacious-padding-subtle-mode-line
+(setq spacious-padding-subtle-frame-lines
       '(:mode-line-active error))
 
 ;; As above, but now use the foreground of the `shadow' face for the
 ;; inactive mode line.
-(setq spacious-padding-subtle-mode-line
+(setq spacious-padding-subtle-frame-lines
       '(:mode-line-active error :mode-line-inactive shadow))
 
 ;; Use color values directly.
-(setq spacious-padding-subtle-mode-line
+(setq spacious-padding-subtle-frame-lines
       '(:mode-line-active "#0000ff" :mode-line-inactive "gray50"))
+
+;; A complete example with all the keys currently available.
+(setq spacious-padding-subtle-frame-lines
+      '( :mode-line-active spacious-padding-line-active
+         :mode-line-inactive spacious-padding-line-inactive
+         :header-line-active spacious-padding-line-active
+         :header-line-inactive spacious-padding-line-inactive))
 #+end_src
 
-#+vindex: spacious-padding-subtle-mode-line-active
-#+vindex: spacious-padding-subtle-mode-line-inactive
+#+vindex: spacious-padding-line-active
+#+vindex: spacious-padding-line-inactive
 For the convenience of the user, we define the faces
-~spacious-padding-subtle-mode-line-active~ and
-~spacious-padding-subtle-mode-line-inactive~, which can be used as
-described above.
+~spacious-padding-line-active~ and ~spacious-paddinge-line-inactive~,
+which can be used as described above. [ These faces are the new names
+of the now-obsolete ~spacious-padding-subtle-mode-line-active~ and
+~spacious-padding-subtle-mode-line-inactive~ as part of {{{development-version}}}. ]
+
+For optimal results with underlines, set ~x-underline-at-descent-line~
+to a non-nil value.
 
 * Installation
 :PROPERTIES:
@@ -263,9 +286,13 @@ Everything is in place to set up the package.
 
 ;; Read the doc string of `spacious-padding-subtle-mode-line' as it
 ;; is very flexible and provides several examples.
-(setq spacious-padding-subtle-mode-line
+(setq spacious-padding-subtle-frame-lines
       `( :mode-line-active 'default
          :mode-line-inactive vertical-border))
+
+;; Make the underlines appear below the base line, to create a more
+;; consistent effect between overlines and underlines.
+(setq x-underline-at-descent-line t)
 
 (spacious-padding-mode 1)
 
