@@ -314,9 +314,9 @@ help matters.
 + Contributions to code or the manual :: Lucas Gruss, Martin Marshall,
   Neo Dim, Ruby Iris Juric.
 
-+ Ideas and/or user feedback :: Aronne Raimondi, Damien Cassou, Julian
-  Flake, Lou Woell, Lucas Gruss, Nicolas Semrau, Pierre Baille,
-  Stefano Rodighiero, Tobias Tschinkowitz, Tomasz Hołubowicz,
++ Ideas and/or user feedback :: Aronne Raimondi, Chinmay Dalal, Damien
+  Cassou, Julian Flake, Lou Woell, Lucas Gruss, Nicolas Semrau, Pierre
+  Baille, Stefano Rodighiero, Tobias Tschinkowitz, Tomasz Hołubowicz,
   domsch1988, tusharhero.
 
 Inspiration for this package comes from Nicolas Rougier's impressive

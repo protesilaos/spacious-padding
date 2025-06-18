@@ -317,12 +317,15 @@ is non-nil, do not return a fallback value: just nil."
   "Get overline foreground value for FACE with FALLBACK face if needed.
 Use SUBTLE-KEY to determine the value based on
 `spacious-padding-subtle-frame-lines', falling back to FACE, then
-FALLBACK."
+FALLBACK.  Fall back to a non-nil value if not of these return something
+more specific."
   (let ((subtle-value (plist-get spacious-padding-subtle-frame-lines subtle-key)))
-    (cond
-     ((stringp subtle-value) subtle-value)
-     ((facep subtle-value) (face-foreground subtle-value nil face))
-     (t (face-foreground face nil fallback)))))
+    (or
+     (cond
+      ((stringp subtle-value) subtle-value)
+      ((facep subtle-value) (face-foreground subtle-value nil face))
+      (t (face-foreground face nil fallback)))
+     t)))
 
 (defun spacious-padding-set-face-box-padding (face fallback &optional subtle-key)
   "Return face attributes for FACE with FALLBACK face background.
