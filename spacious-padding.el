@@ -314,11 +314,10 @@ is non-nil, do not return a fallback value: just nil."
    (t (error "`%s' is not relevant to `spacious-padding-mode'" face))))
 
 (defun spacious-padding--get-face-overline-color (face fallback subtle-key)
-  "Get overline foreground value for FACE with FALLBACK face if needed.
-Use SUBTLE-KEY to determine the value based on
-`spacious-padding-subtle-frame-lines', falling back to FACE, then
-FALLBACK.  Fall back to a non-nil value if not of these return something
-more specific."
+  "Get {over,under}line foreground.
+Use SUBTLE-KEY to check `spacious-padding-subtle-frame-lines', falling
+back to FACE, then FALLBACK.  Return a non-nil value if none of these
+yield something more specific."
   (let ((subtle-value (plist-get spacious-padding-subtle-frame-lines subtle-key)))
     (or
      (cond
