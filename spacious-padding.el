@@ -313,7 +313,7 @@ is non-nil, do not return a fallback value: just nil."
         (spacious-padding--get-box-width :tab-width)))
    (t (error "`%s' is not relevant to `spacious-padding-mode'" face))))
 
-(defun spacious-padding--get-face-overline-color (face fallback subtle-key)
+(defun spacious-padding--get-face-line-color (face fallback subtle-key)
   "Get {over,under}line foreground.
 Use SUBTLE-KEY to check `spacious-padding-subtle-frame-lines', falling
 back to FACE, then FALLBACK.  Return a non-nil value if none of these
@@ -342,8 +342,8 @@ overline."
              (list
               :background bg
               (if (memq subtle-key '(:header-line-active :header-line-inactive))
-                  (list :underline (spacious-padding--get-face-overline-color face fallback subtle-key))
-                (list :overline (spacious-padding--get-face-overline-color face fallback subtle-key))))))
+                  (list :underline (spacious-padding--get-face-line-color face fallback subtle-key))
+                (list :overline (spacious-padding--get-face-line-color face fallback subtle-key))))))
         ,@(unless (eq face-width 0)
             (list
              :box
