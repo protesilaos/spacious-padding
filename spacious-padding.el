@@ -248,16 +248,6 @@ to a non-nil value."
   :package-version '(spacious-padding . "0.8.0")
   :group 'spacious-padding)
 
-(defcustom spacious-padding-subtle-header-line nil
-  "When non-nil, make header lines use an underline."
-    :type '(choice boolean
-                 (plist
-                  :key-type (choice (const :header-line-active)
-                                    (const :header-line-inactive))
-                  :value-type (choice string face)))
-  :package-version '(spacious-padding . "0.8.0")
-  :group 'spacious-padding)
-
 ;; NOTE 2023-12-05: The `keycast-key' should preferably be
 ;; disambiguated into separate faces for all the places where keycast
 ;; can be displayed (mode line, header line, tab bar).  For now I am
