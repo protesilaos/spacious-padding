@@ -209,9 +209,6 @@ which can be used as described above. [ These faces are the new names
 of the now-obsolete ~spacious-padding-subtle-mode-line-active~ and
 ~spacious-padding-subtle-mode-line-inactive~ as part of {{{development-version}}}. ]
 
-For optimal results with underlines, set ~x-underline-at-descent-line~
-to a non-nil value.
-
 * Installation
 :PROPERTIES:
 :CUSTOM_ID: h:f3bdac2c-4704-4a51-948c-a789a2589790
@@ -289,10 +286,6 @@ Everything is in place to set up the package.
 (setq spacious-padding-subtle-frame-lines
       `( :mode-line-active 'default
          :mode-line-inactive vertical-border))
-
-;; Make the underlines appear below the base line, to create a more
-;; consistent effect between overlines and underlines.
-(setq x-underline-at-descent-line t)
 
 (spacious-padding-mode 1)
 
