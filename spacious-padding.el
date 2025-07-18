@@ -234,10 +234,7 @@ which can be used as described above.  Another example:
           \\='( :mode-line-active spacious-padding-line-active
              :mode-line-inactive spacious-padding-line-inactive
              :header-line-active spacious-padding-line-active
-             :header-line-inactive spacious-padding-line-inactive))
-
-For optimal results with underlines, set `x-underline-at-descent-line'
-to a non-nil value."
+             :header-line-inactive spacious-padding-line-inactive))"
   :type '(choice boolean
                  (plist
                   :key-type (choice (const :mode-line-active)
@@ -328,12 +325,14 @@ overline."
            (bg (if subtlep subtle-bg original-bg))
            (face-width (spacious-padding--get-face-width face)))
       `(,@(when subtlep
-            (flatten-list
-             (list
-              :background bg
+             (append
+              (list :background bg)
               (if (memq subtle-key '(:header-line-active :header-line-inactive))
-                  (list :underline (spacious-padding--get-face-line-color face fallback subtle-key))
-                (list :overline (spacious-padding--get-face-line-color face fallback subtle-key))))))
+                  (list :underline
+                    (list
+                     :color (spacious-padding--get-face-line-color face fallback subtle-key)
+                     :position t))
+                (list :overline (spacious-padding--get-face-line-color face fallback subtle-key)))))
         ,@(unless (eq face-width 0)
             (list
              :box
