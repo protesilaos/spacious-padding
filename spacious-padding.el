@@ -234,7 +234,11 @@ which can be used as described above.  Another example:
           \\='( :mode-line-active spacious-padding-line-active
              :mode-line-inactive spacious-padding-line-inactive
              :header-line-active spacious-padding-line-active
-             :header-line-inactive spacious-padding-line-inactive))"
+             :header-line-inactive spacious-padding-line-inactive))
+
+Users of Emacs 28 need to set `x-underline-at-descent-line' to a non-nil
+value to get the desired spacing with the underlines.  Newer versions of
+Emacs give us control of this attribute at the level of the individual face."
   :type '(choice boolean
                  (plist
                   :key-type (choice (const :mode-line-active)

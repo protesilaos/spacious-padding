@@ -209,6 +209,10 @@ which can be used as described above. [ These faces are the new names
 of the now-obsolete ~spacious-padding-subtle-mode-line-active~ and
 ~spacious-padding-subtle-mode-line-inactive~ as part of {{{development-version}}}. ]
 
+Users of Emacs 28 need to set ~x-underline-at-descent-line~ to a non-nil
+value to get the desired spacing with the underlines.  Newer versions of
+Emacs give us control of this attribute at the level of the individual face.
+
 * Installation
 :PROPERTIES:
 :CUSTOM_ID: h:f3bdac2c-4704-4a51-948c-a789a2589790
