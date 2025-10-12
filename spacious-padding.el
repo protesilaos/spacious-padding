@@ -329,14 +329,14 @@ overline."
            (bg (if subtlep subtle-bg original-bg))
            (face-width (spacious-padding--get-face-width face)))
       `(,@(when subtlep
-             (append
-              (list :background bg)
-              (if (memq subtle-key '(:header-line-active :header-line-inactive))
-                  (list :underline
-                    (list
-                     :color (spacious-padding--get-face-line-color face fallback subtle-key)
-                     :position t))
-                (list :overline (spacious-padding--get-face-line-color face fallback subtle-key)))))
+            (append
+             (list :background bg)
+             (if (memq subtle-key '(:header-line-active :header-line-inactive))
+                 (list :underline
+                       (list
+                        :color (spacious-padding--get-face-line-color face fallback subtle-key)
+                        :position t))
+               (list :overline (spacious-padding--get-face-line-color face fallback subtle-key)))))
         ,@(unless (eq face-width 0)
             (list
              :box
@@ -458,7 +458,7 @@ hooks that pass one or more arguments to it, such as
      ,(format "Return value of frame parameter `%s'.
 With optional RESET argument as non-nil, restore the default
 parameter value."
-             parameter)
+              parameter)
      (or
       (if reset
           ,(intern (format "spacious-padding--%s" parameter))
@@ -483,9 +483,9 @@ parameter values."
                       (right-fringe . ,(or (spacious-padding--get-right-fringe-width reset)
                                            (spacious-padding--get-fringe-width reset)))
                       (scroll-bar-width  . ,(spacious-padding--get-scroll-bar-width reset)))))
-   (if frame
-       (modify-frame-parameters frame parameters)
-     (modify-all-frames-parameters parameters))))
+    (if frame
+        (modify-frame-parameters frame parameters)
+      (modify-all-frames-parameters parameters))))
 
 ;;;###autoload
 (defun spacious-padding-set-parameters-of-frame (frame)
