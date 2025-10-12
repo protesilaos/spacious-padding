@@ -323,7 +323,7 @@ With optional SUBTLE-KEY, read its value from the
 `spacious-padding-subtle-frame-lines' and apply it to FACE as an
 overline."
   (when (facep face)
-    (let* ((original-bg (face-background face nil fallback))
+    (let* ((original-bg (or (face-background face nil fallback) 'unspecified))
            (subtle-bg (face-background 'default))
            (subtlep (and subtle-key spacious-padding-subtle-frame-lines))
            (bg (if subtlep subtle-bg original-bg))
