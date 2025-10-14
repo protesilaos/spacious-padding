@@ -341,7 +341,7 @@ overline."
             (list
              :box
              `( :line-width ,face-width
-                :color ,bg
+                :color ,(if (eq bg 'unspecified) nil bg)
                 :style nil)))))))
 
 (defun spacious-padding-set-window-divider (face color)
