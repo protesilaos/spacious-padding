@@ -309,7 +309,7 @@ help matters.
 + Author/maintainer :: Protesilaos Stavrou.
 
 + Contributions to code or the manual :: Lucas Gruss, Martin Marshall,
-  Neo Dim, Ruby Iris Juric, Steven Allen.
+  Neo Dim, Ruby Iris Juric, Steven Allen, kaibagley.
 
 + Ideas and/or user feedback :: Aronne Raimondi, Chinmay Dalal, Damien
   Cassou, Julian Flake, Lou Woell, Lucas Gruss, Nicolas Semrau, Pierre
