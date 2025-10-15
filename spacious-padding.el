@@ -307,15 +307,12 @@ is non-nil, do not return a fallback value: just nil."
 (defun spacious-padding--get-face-line-color (face fallback subtle-key)
   "Get {over,under}line foreground.
 Use SUBTLE-KEY to check `spacious-padding-subtle-frame-lines', falling
-back to FACE, then FALLBACK.  Return a non-nil value if none of these
-yield something more specific."
+back to FACE, then FALLBACK."
   (let ((subtle-value (plist-get spacious-padding-subtle-frame-lines subtle-key)))
-    (or
-     (cond
-      ((stringp subtle-value) subtle-value)
-      ((facep subtle-value) (face-foreground subtle-value nil face))
-      (t (face-foreground face nil fallback)))
-     t)))
+    (cond
+     ((stringp subtle-value) subtle-value)
+     ((facep subtle-value) (face-foreground subtle-value nil face))
+     (t (face-foreground face nil fallback)))))
 
 (defun spacious-padding-set-face-box-padding (face fallback &optional subtle-key)
   "Return face attributes for FACE with FALLBACK face background.
@@ -334,9 +331,10 @@ overline."
              (if (memq subtle-key '(:header-line-active :header-line-inactive))
                  (list :underline
                        (list
-                        :color (spacious-padding--get-face-line-color face fallback subtle-key)
+                        :color (or (spacious-padding--get-face-line-color face fallback subtle-key)
+                                   (face-foreground 'default))
                         :position t))
-               (list :overline (spacious-padding--get-face-line-color face fallback subtle-key)))))
+               (list :overline (or (spacious-padding--get-face-line-color face fallback subtle-key) t)))))
         ,@(unless (eq face-width 0)
             (list
              :box
