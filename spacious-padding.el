@@ -69,6 +69,7 @@
   '( :internal-border-width 15
      :header-line-width 4
      :mode-line-width 6
+     :custom-button-width 3
      :tab-width 4
      :right-divider-width 30
      :scroll-bar-width 8
@@ -108,6 +109,9 @@ following:
   point to the header-line, mode-line, and scroll-bar,
   respectively.
 
+- `:custom-button-width' is for all buttons shown in the Custom User
+  Interface and related.
+
 For the technicalities, read Info node `(elisp) Frame Layout'.
 
 When the value is nil, fall back to reasonable defaults."
@@ -122,9 +126,10 @@ When the value is nil, fall back to reasonable defaults."
                             (const :tab-line-width)
                             (const :header-line-width)
                             (const :mode-line-width)
+                            (const :custom-button-width)
                             (const :scroll-bar-width))
           :value-type (choice natnum (const nil)))
-  :package-version '(spacious-padding . "0.4.0")
+  :package-version '(spacious-padding . "0.8.0")
   :group 'spacious-padding)
 
 (define-obsolete-face-alias
@@ -271,6 +276,10 @@ Emacs give us control of this attribute at the level of the individual face."
   '(tab-line tab-line-tab tab-line-tab-inactive tab-line-tab-current)
   "Tab faces relevant to `spacious-padding-mode'.")
 
+(defvar spacious-padding--custom-button-faces
+  '(custom-button custom-button-mouse custom-button-pressed)
+  "Custom UI button faces relevant to `spacious-padding-mode'.")
+
 (defun spacious-padding--get-window-divider-width (&optional no-fallback)
   "Get the width of window divider.
 With optional NO-FALLBACK return nil if there is no value.  Else return
@@ -302,6 +311,8 @@ is non-nil, do not return a fallback value: just nil."
    ((memq face spacious-padding--tab-line-faces)
     (or (spacious-padding--get-box-width :tab-line-width :fall-back-to-tab-width)
         (spacious-padding--get-box-width :tab-width)))
+   ((memq face spacious-padding--custom-button-faces)
+    (spacious-padding--get-box-width :custom-button-width))
    (t (error "`%s' is not relevant to `spacious-padding-mode'" face))))
 
 (defun spacious-padding--get-face-line-color (face fallback subtle-key)
@@ -366,6 +377,9 @@ hooks that pass one or more arguments to it, such as
         custom--inhibit-theme-enable)
     (custom-theme-set-faces
      'spacious-padding
+     `(custom-button ((t ,@(spacious-padding-set-face-box-padding 'custom-button 'default))))
+     `(custom-button-mouse ((t ,@(spacious-padding-set-face-box-padding 'custom-button-mouse 'default))))
+     `(custom-button-pressed ((t ,@(spacious-padding-set-face-box-padding 'custom-button-pressed 'default))))
      `(fringe ((t :background ,bg-main)))
      `(line-number ((t :background ,bg-main)))
      `(header-line ((t ,@(spacious-padding-set-face-box-padding 'header-line 'default :header-line-active))))
@@ -393,6 +407,9 @@ hooks that pass one or more arguments to it, such as
   (let (custom--inhibit-theme-enable)
     (custom-theme-set-faces
      'spacious-padding
+     `(custom-button (( )))
+     `(custom-button-mouse (( )))
+     `(custom-button-pressed (( )))
      '(fringe (( )))
      '(line-number (( )))
      '(header-line (( )))

@@ -121,6 +121,9 @@ value is used). Keys are keywords among the following:
 - ~:header-line-width~, ~mode-line-width~, ~scroll-bar-width~ point to
   the ~header-line~, ~mode-line~, and ~scroll-bar~, respectively.
 
+- ~:custom-button-width~ is for all buttons shown in the Custom User
+  Interface and related. [ Part of {{{development-version}}}. ]
+
 ** Make the mode and header lines subtle
 :PROPERTIES:
 :CUSTOM_ID: h:cffe3c7e-9f67-4147-8ada-edfcc4cf979e
