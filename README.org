@@ -276,28 +276,25 @@ Everything is in place to set up the package.
 #+cindex: Package configuration
 
 #+begin_src emacs-lisp
-(require 'spacious-padding)
+(use-package spacious-padding
+  :ensure t
+  :config
+  ;; These are the default values, but I keep them here for visibility.
+  ;; Also check `spacious-padding-subtle-frame-lines'.
+  (setq spacious-padding-widths
+        '( :internal-border-width 15
+           :header-line-width 4
+           :mode-line-width 6
+           :custom-button-width 3
+           :tab-width 4
+           :right-divider-width 30
+           :scroll-bar-width 8
+           :fringe-width 8))
 
-;; These are the default values, but I keep them here for visibility.
-(setq spacious-padding-widths
-      '( :internal-border-width 15
-         :header-line-width 4
-         :mode-line-width 6
-         :tab-width 4
-         :right-divider-width 30
-         :scroll-bar-width 8
-         :fringe-width 8))
+  (spacious-padding-mode 1)
 
-;; Read the doc string of `spacious-padding-subtle-mode-line' as it
-;; is very flexible and provides several examples.
-(setq spacious-padding-subtle-frame-lines
-      `( :mode-line-active 'default
-         :mode-line-inactive vertical-border))
-
-(spacious-padding-mode 1)
-
-;; Set a key binding if you need to toggle spacious padding.
-(define-key global-map (kbd "<f8>") #'spacious-padding-mode)
+  ;; Set a key binding if you need to toggle spacious padding.
+  (define-key global-map (kbd "<f8>") #'spacious-padding-mode))
 #+end_src
 
 * Acknowledgements
