@@ -4,9 +4,9 @@
 #+language: en
 #+options: ':t toc:nil author:t email:t num:t
 #+startup: content
-#+macro: stable-version 0.7.0
-#+macro: release-date 2025-06-01
-#+macro: development-version 0.8.0-dev
+#+macro: stable-version 0.8.0
+#+macro: release-date 2025-12-13
+#+macro: development-version 0.9.0-dev
 #+export_file_name: spacious-padding.texi
 #+texinfo_filename: spacious-padding.info
 #+texinfo_dir_category: Emacs misc features
@@ -203,16 +203,12 @@ value is used). Keys are keywords among the following:
   the ~header-line~, ~mode-line~, and ~scroll-bar~, respectively.
 
 - ~:custom-button-width~ is for all buttons shown in the Custom User
-  Interface and related. [ Part of {{{development-version}}}. ]
+  Interface and related.
 
 ** Make the mode and header lines subtle
 :PROPERTIES:
 :CUSTOM_ID: h:cffe3c7e-9f67-4147-8ada-edfcc4cf979e
 :END:
-
-[ As part of {{{development-version}}}, the user option is now called
-  ~spacious-padding-subtle-frame-lines~ instead of ~spacious-padding-subtle-mode-line~.
-  Header line faces are covered as well. ]
 
 #+vindex: spacious-padding-subtle-frame-lines
 By default, ~spacious-padding-mode~ does not refashion the mode lines
@@ -289,9 +285,7 @@ Examples of valid configurations:
 #+vindex: spacious-padding-line-inactive
 For the convenience of the user, we define the faces
 ~spacious-padding-line-active~ and ~spacious-paddinge-line-inactive~,
-which can be used as described above. [ These faces are the new names
-of the now-obsolete ~spacious-padding-subtle-mode-line-active~ and
-~spacious-padding-subtle-mode-line-inactive~ as part of {{{development-version}}}. ]
+which can be used as described above.
 
 Users of Emacs 28 need to set ~x-underline-at-descent-line~ to a non-nil
 value to get the desired spacing with the underlines.  Newer versions of
