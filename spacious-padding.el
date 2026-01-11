@@ -1,6 +1,6 @@
 ;;; spacious-padding.el --- Increase the padding/spacing of frames and windows -*- lexical-binding: t -*-
 
-;; Copyright (C) 2023-2025  Free Software Foundation, Inc.
+;; Copyright (C) 2023-2026  Free Software Foundation, Inc.
 
 ;; Author: Protesilaos Stavrou <info@protesilaos.com>
 ;; Maintainer: Protesilaos Stavrou <info@protesilaos.com>
