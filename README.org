@@ -19,10 +19,10 @@
 
 #+texinfo: @insertcopying
 
-This manual, written by Protesilaos, describes the
-customization options for the Emacs package called ~spacious-padding~
-(or =spacious-padding.el=), and provides every other piece of
-information pertinent to it.
+This manual, written by Protesilaos, describes the customization
+options for the Emacs package called ~spacious-padding~ (or
+=spacious-padding.el=), and provides every other piece of information
+pertinent to it.
 
 The documentation furnished herein corresponds to stable version
 {{{stable-version}}}, released on {{{release-date}}}.  Any reference to
