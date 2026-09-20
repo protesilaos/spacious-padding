@@ -13,6 +13,19 @@ the manual: <https://protesilaos.com/emacs/spacious-padding>.
 
 #+toc: headlines 1 insert TOC here, with one headline level
 
+* Version 0.9.0 on 2026-09-20
+:PROPERTIES:
+:CUSTOM_ID: h:325d9abc-023c-4db0-bd35-3195da81920d
+:END:
+
+This is a small version that addresses a minor inconvenience with the
+Emacs daemon process reporting an =unspecified-bg= under certain
+circumstances. The workaround I defined ensures that we always use a
+known colour value.
+
+Other than that, the ~margin~ face, which was introduced in Emacs
+version 31, is also handled by ~spacious-padding-mode~.
+
 * Version 0.8.0 on 2025-12-13
 :PROPERTIES:
 :CUSTOM_ID: h:4a3250fa-b905-4bc4-bd22-7cb5690aef1b
