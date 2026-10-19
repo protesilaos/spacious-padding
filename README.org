@@ -308,7 +308,7 @@ help matters.
 + Ideas and/or user feedback :: Aronne Raimondi, Chinmay Dalal, Damien
   Cassou, Julian Flake, Lou Woell, Lucas Gruss, Nicolas Semrau, Pierre
   Baille, Stefano Rodighiero, Tobias Tschinkowitz, Tomasz Hołubowicz,
-  domsch1988, tusharhero, zealotrush.
+  domsch1988, mtp13, tusharhero, zealotrush.
 
 Inspiration for this package comes from Nicolas Rougier's impressive
 designs and Daniel Mendler's ~org-modern~ package:

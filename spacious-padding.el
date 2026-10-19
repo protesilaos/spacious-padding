@@ -324,7 +324,7 @@ FACE, ATTRIBUTE, FRAME, and INHERIT have the same meaning as in
 `face-attribute'."
   (cond
    ((when-let* ((value (face-attribute face attribute frame inherit))
-                (_ (not (member value '("unspecified-bg" "unspecified-fg")))))
+                (_ (not (member value '(unspecified "unspecified-bg" "unspecified-fg")))))
       value))
    ((when-let* ((_ (eq attribute :background))
                 (background (frame-parameter nil 'background-color))
