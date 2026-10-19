@@ -150,6 +150,18 @@ Everything is in place to set up the package.
   (define-key global-map (kbd "<f8>") #'spacious-padding-mode))
 #+end_src
 
+If you are using a tiling window manager, then you might also need to
+add the following to your =early-init.el= to make the first Emacs
+frame use the correct size when it launches, so that everything looks
+right with ~spacious-padding-mode~ enabled:
+
+#+begin_src emacs-lisp
+;; Try this:
+(setq frame-inhibit-implied-resize t)
+;; And if that does not work, then try this instead:
+(setq frame-inhibit-implied-resize 'force)
+#+end_src
+
 * Overview
 :PROPERTIES:
 :CUSTOM_ID: h:ea728ce0-d319-4054-b8ee-5109a316c795
@@ -306,9 +318,10 @@ help matters.
   Neo Dim, Ruby Iris Juric, Steven Allen, kaibagley.
 
 + Ideas and/or user feedback :: Aronne Raimondi, Chinmay Dalal, Damien
-  Cassou, Julian Flake, Lou Woell, Lucas Gruss, Nicolas Semrau, Pierre
-  Baille, Stefano Rodighiero, Tobias Tschinkowitz, Tomasz Hołubowicz,
-  domsch1988, mtp13, tusharhero, zealotrush.
+  Cassou, Dheeraj Vittal Shenoy, Julian Flake, Lou Woell, Lucas Gruss,
+  Nicolas Semrau, Pierre Baille, Stefano Rodighiero, Tobias
+  Tschinkowitz, Tomasz Hołubowicz, domsch1988, mtp13, tusharhero,
+  zealotrush.
 
 Inspiration for this package comes from Nicolas Rougier's impressive
 designs and Daniel Mendler's ~org-modern~ package:
